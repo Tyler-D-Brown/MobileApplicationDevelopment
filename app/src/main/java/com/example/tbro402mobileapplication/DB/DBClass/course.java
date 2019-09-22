@@ -1,4 +1,92 @@
 package com.example.tbro402mobileapplication.DB.DBClass;
 
+import java.util.Date;
+
 public class course {
+    private String title;
+    private int id;
+    private Date startDate;
+    private Date endDate;
+    private int term;
+    private String status;
+    private String note;
+    private int mentor;
+
+    public course() {
+    }
+
+    public course(String title, int id, Date startDate, Date endDate, int term, String status, String note, int mentor) {
+        this.title = title;
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.term = term;
+        this.status = status;
+        this.note = note;
+        this.mentor = mentor;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public int getTerm() {
+        return term;
+    }
+
+    public void setTerm(int term) {
+        this.term = term;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public int getMentor() {
+        return mentor;
+    }
+
+    public void setMentor(int mentor) {
+        this.mentor = mentor;
+    }
 }

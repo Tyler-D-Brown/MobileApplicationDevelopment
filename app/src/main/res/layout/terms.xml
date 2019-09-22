@@ -14,7 +14,7 @@
         android:layout_marginLeft="8dp"
         android:text="Progress"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +23,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/progress"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,11 +38,11 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/add"
@@ -50,68 +50,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progress">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/termCard"
+        <LinearLayout
+            android:id="@+id/termContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical"/>
 
-            <Button
-                android:id="@+id/term"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="Term 1"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/startDate"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:id="@+id/startDate"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:ems="10"
-                android:importantForAutofill="no"
-                android:inputType="date"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/term"
-                app:layout_constraintTop_toBottomOf="@+id/startDateText" />
-
-            <EditText
-                android:id="@+id/endDate"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:ems="10"
-                android:inputType="date"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/term"
-                app:layout_constraintTop_toBottomOf="@+id/endDateText" />
-
-            <TextView
-                android:id="@+id/endDateText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="End Date"
-                android:textAlignment="center"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/endDate"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/term"
-                app:layout_constraintTop_toBottomOf="@+id/startDate" />
-
-            <TextView
-                android:id="@+id/startDateText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Start Date"
-                android:textAlignment="center"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toTopOf="@+id/startDate"
-                app:layout_constraintStart_toEndOf="@+id/term"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
