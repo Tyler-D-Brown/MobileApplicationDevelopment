@@ -1,9 +1,16 @@
 package com.example.tbro402mobileapplication.DB.DBClass;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
+
+@Entity
 public class course {
     private String title;
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private Date startDate;
     private Date endDate;
@@ -12,6 +19,7 @@ public class course {
     private String note;
     private int mentor;
 
+    @Ignore
     public course() {
     }
 

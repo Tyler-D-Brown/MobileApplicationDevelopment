@@ -1,13 +1,21 @@
 package com.example.tbro402mobileapplication.DB.DBClass;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
+@Entity
+
 public class term {
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
     private Date startDate;
     private Date endDate;
 
+    @Ignore
     public term(){}
 
     public term(int id, String title, Date startDate, Date endDate) {

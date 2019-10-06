@@ -1,8 +1,15 @@
 package com.example.tbro402mobileapplication.DB.DBClass;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
+@Entity
+
 public class assessment {
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private Date startDate;
     private Date endDate;
@@ -11,6 +18,7 @@ public class assessment {
     private String type;
     private String status;
 
+    @Ignore
     public assessment(){
     }
 

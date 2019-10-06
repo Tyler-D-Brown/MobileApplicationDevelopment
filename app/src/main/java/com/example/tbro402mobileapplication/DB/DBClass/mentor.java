@@ -1,11 +1,19 @@
 package com.example.tbro402mobileapplication.DB.DBClass;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity
+
 public class mentor {
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
     private String email;
     private String phone;
 
+    @Ignore
     public mentor(){
     }
 
