@@ -6,7 +6,7 @@ public final class dbMentor {
     private dbMentor(){}
 
     public static class MentorEntry implements BaseColumns {
-        public static final String TABLE_NAME = "mentor";
+        public static final String TABLE_NAME = "Mentor";
         //public static final String ID = "ID";
         public static final String NAME = "name";
         public static final String EMAIL = "email";

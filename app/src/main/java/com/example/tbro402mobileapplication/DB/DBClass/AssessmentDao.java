@@ -13,23 +13,23 @@ import java.util.List;
 @Dao
 public interface AssessmentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAssessment(assessment assess);
+    void insertAssessment(Assessment assess);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAssessment(List<assessment> assess);
+    void insertAssessment(List<Assessment> assess);
 
     @Delete
-    void deleteAssessment(assessment assess);
+    void deleteAssessment(Assessment assess);
 
-    @Query("SELECT * FROM assessment WHERE id = :id")
-    assessment getAssessmentById(int id);
+    @Query("SELECT * FROM Assessment WHERE id = :id")
+    Assessment getAssessmentById(int id);
 
-    @Query("SELECT * FROM assessment ORDER BY course")
-    LiveData<List<assessment>> getAll();
+    @Query("SELECT * FROM Assessment ORDER BY course")
+    LiveData<List<Assessment>> getAll();
 
-    @Query("DELETE FROM assessment")
+    @Query("DELETE FROM Assessment")
     int deleteAll();
 
-    @Query("SELECT COUNT(*) FROM assessment")
+    @Query("SELECT COUNT(*) FROM Assessment")
     int getCount();
 }

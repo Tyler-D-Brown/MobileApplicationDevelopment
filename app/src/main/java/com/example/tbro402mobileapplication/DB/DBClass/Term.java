@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 
-public class term {
+public class Term {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
@@ -16,9 +16,9 @@ public class term {
     private Date endDate;
 
     @Ignore
-    public term(){}
+    public Term(){}
 
-    public term(int id, String title, Date startDate, Date endDate) {
+    public Term(int id, String title, Date startDate, Date endDate) {
         this.id = id;
         this.title = title;
         this.startDate = startDate;

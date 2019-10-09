@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 
-public class assessment {
+public class Assessment {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private Date startDate;
@@ -18,19 +18,18 @@ public class assessment {
     private String type;
     private String status;
 
-    @Ignore
-    public assessment(){
+    public Assessment(int id, Date startDate, Date endDate, String title, int course, String type, String status){
+        this.id=id;
+        this.startDate=startDate;
+        this.endDate=endDate;
+        this.title=title;
+        this.course=course;
+        this.type=type;
+        this.status=status;
     }
 
-    public assessment(int i, Date start, Date end, String tite, int cour, String ty, String state){
-        this.id=i;
-        this.startDate=start;
-        this.course=cour;
-        this.endDate=end;
-        this.title=tite;
-        this.type=ty;
-        this.status=state;
-    }
+    @Ignore
+    public Assessment(){}
 
     public int getId() {
         return id;

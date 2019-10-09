@@ -8,7 +8,7 @@ import java.util.Date;
 
 
 @Entity
-public class course {
+public class Course {
     private String title;
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -20,10 +20,9 @@ public class course {
     private int mentor;
 
     @Ignore
-    public course() {
-    }
+    public Course() {}
 
-    public course(String title, int id, Date startDate, Date endDate, int term, String status, String note, int mentor) {
+    public Course(String title, int id, Date startDate, Date endDate, int term, String status, String note, int mentor) {
         this.title = title;
         this.id = id;
         this.startDate = startDate;

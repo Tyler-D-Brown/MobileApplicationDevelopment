@@ -3,7 +3,7 @@ package com.example.tbro402mobileapplication;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.example.tbro402mobileapplication.DB.DBClass.term;
+import com.example.tbro402mobileapplication.DB.DBClass.Term;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import java.util.Date;
 
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.terms);
-        term[] terms = {(new term(0, "term 1", new Date(), new Date())), (new term(0, "term 2", new Date(), new Date())), (new term(0, "term 3", new Date(), new Date()))};
+        Term[] terms = {(new Term(0, "Term 1", new Date(), new Date())), (new Term(0, "Term 2", new Date(), new Date())), (new Term(0, "Term 3", new Date(), new Date()))};
         Log.d("terms object", terms[0].getTitle() + terms[1].getTitle() + terms[2].getTitle());
 
         for(int i = 0; i<terms.length; i++){
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void insertTermRow(term add){
+    private void insertTermRow(Term add){
         LinearLayout contain = findViewById(R.id.termContainer);
         LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 

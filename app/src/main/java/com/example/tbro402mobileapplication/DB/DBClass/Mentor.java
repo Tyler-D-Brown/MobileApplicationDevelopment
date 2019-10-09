@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 
-public class mentor {
+public class Mentor {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
@@ -14,10 +14,9 @@ public class mentor {
     private String phone;
 
     @Ignore
-    public mentor(){
-    }
+    public Mentor(){}
 
-    public mentor(int id, String name, String email, String phone) {
+    public Mentor(int id, String name, String email, String phone) {
         this.id = id;
         this.name = name;
         this.email = email;
