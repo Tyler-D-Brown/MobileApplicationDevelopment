@@ -4,10 +4,13 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.example.tbro402mobileapplication.DB.DBClass.Term;
+import com.example.tbro402mobileapplication.ViewModel.MainViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,15 +27,17 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
+    private MainViewModel mainViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.terms);
-        Term[] terms = {(new Term(0, "Term 1", new Date(), new Date())), (new Term(0, "Term 2", new Date(), new Date())), (new Term(0, "Term 3", new Date(), new Date()))};
-        Log.d("terms object", terms[0].getTitle() + terms[1].getTitle() + terms[2].getTitle());
-
-        for(int i = 0; i<terms.length; i++){
-            insertTermRow(terms[i]);
+        initViewModel();
+        if(mainViewModel.terms != null) {
+            for (int i = 0; i < mainViewModel.terms.size(); i++) {
+                insertTermRow(mainViewModel.terms.get(i));
+            }
         }
 
         FloatingActionButton fab = findViewById(R.id.add);
@@ -45,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void initViewModel() {
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
     }
 
     @Override
