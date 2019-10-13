@@ -9,6 +9,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -23,22 +24,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import java.util.Date;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-
     private MainViewModel mainViewModel;
+    private List<Term> termData = mainViewModel.terms.getValue();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.terms);
         initViewModel();
-        if(mainViewModel.terms != null) {
-            for (int i = 0; i < mainViewModel.terms.size(); i++) {
-                insertTermRow(mainViewModel.terms.get(i));
-            }
-        }
 
         FloatingActionButton fab = findViewById(R.id.add);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +50,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
+        final Observer<List<Term>> termObserver = new Observer<List<Term>>() {
+            @Override
+            public void onChanged(List<Term> terms) {
+                termData.clear();
+                termData.addAll(terms);
+
+                if(mainViewModel.terms != null) {
+                    for (int i = 0; i < termData.size(); i++) {
+                        insertTermRow(termData.get(i));
+                    }
+                }
+            }
+        };
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mainViewModel.terms.observe(this, termObserver);
     }
 
     @Override
