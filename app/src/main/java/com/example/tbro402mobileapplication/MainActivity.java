@@ -10,10 +10,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
@@ -23,7 +21,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -37,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.terms);
         initViewModel();
 
-        FloatingActionButton fab = findViewById(R.id.add);
+        FloatingActionButton fab = findViewById(R.id.add_term);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout contain = findViewById(R.id.termContainer);
         LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View newTermRow = inflator.inflate(R.layout.term_card, null);
+        View newTermRow = inflator.inflate(R.layout.summary_card, null);
         Button but = newTermRow.findViewById(R.id.term);
         but.setText(add.getTitle());
         EditText start = newTermRow.findViewById(R.id.startDate);
