@@ -91,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View newTermRow = inflator.inflate(R.layout.summary_card, null);
-        Button but = newTermRow.findViewById(R.id.term);
-        but.setText(add.getTitle());
+        Button button = newTermRow.findViewById(R.id.title);
+        button.setText(add.getTitle());
         EditText start = newTermRow.findViewById(R.id.startDate);
         start.setText(add.getStartDate().toString());
         EditText end = newTermRow.findViewById(R.id.endDate);

@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/termCard">
     <Button
-        android:id="@+id/term"
+        android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Term 1"
@@ -24,7 +24,7 @@
         android:importantForAutofill="no"
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/term"
+        app:layout_constraintStart_toEndOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/startDateText" />
 
     <EditText
@@ -36,7 +36,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/term"
+        app:layout_constraintStart_toEndOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/endDateText" />
 
     <TextView
@@ -48,7 +48,7 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/endDate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/term"
+        app:layout_constraintStart_toEndOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/startDate"
         android:inputType="date"/>
 
@@ -61,7 +61,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/startDate"
-        app:layout_constraintStart_toEndOf="@+id/term"
+        app:layout_constraintStart_toEndOf="@+id/title"
         app:layout_constraintTop_toTopOf="parent"
         android:inputType="date"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
