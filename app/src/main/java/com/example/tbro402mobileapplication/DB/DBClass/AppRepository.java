@@ -57,6 +57,10 @@ public class AppRepository {
 
     private LiveData<List<Course>> getAllCourses(){ return db.courseDao().getAll(); }
 
+    public Term getTermById(int id){
+        return db.termDao().getTermById(id);
+    }
+
     private LiveData<List<Course>> getTermCourses(int id){ return db.courseDao().getCourseByTerm(id); }
 
     private LiveData<List<Assessment>> getAllAssessments(){ return db.assessmentDao().getAll(); }

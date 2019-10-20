@@ -1,6 +1,7 @@
 package com.example.tbro402mobileapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.tbro402mobileapplication.DB.DBClass.Term;
@@ -23,10 +24,14 @@ import android.widget.LinearLayout;
 
 import java.util.List;
 
+import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_KEY;
+
 
 public class MainActivity extends AppCompatActivity {
     private MainViewModel mainViewModel;
     private List<Term> termData = mainViewModel.terms.getValue();
+    //TODO validate that the context is correct.
+    private final Context context = getApplicationContext();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void insertTermRow(Term add){
+    private void insertTermRow(final Term add){
         LinearLayout contain = findViewById(R.id.termContainer);
         LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -97,6 +102,13 @@ public class MainActivity extends AppCompatActivity {
         start.setText(add.getStartDate().toString());
         EditText end = newTermRow.findViewById(R.id.endDate);
         end.setText(add.getEndDate().toString());
+        button.setOnClickListener(new View.OnClickListener() {
+                      @Override
+                      public void onClick(View termButton) {
+                          Intent intent = new Intent(context, termDetailsActivity.class);
+                          intent.putExtra(Term_ID_KEY, add.getId());
+                      }
+                  });
 
         ViewGroup insert = contain;
         insert.addView(newTermRow);

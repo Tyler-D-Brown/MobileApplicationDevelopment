@@ -20,9 +20,15 @@ import com.example.tbro402mobileapplication.ViewModel.TermDetailsModel;
 
 import java.util.List;
 
+import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_KEY;
+
 public class termDetailsActivity extends AppCompatActivity {
     private TermDetailsModel t;
     private List<Course> courseData = t.termCourses.getValue();
+    private boolean tNewTerm = false;
+    private EditText termTitle = findViewById(R.id.termTitle);
+    private EditText termStartDate = findViewById(R.id.startDateText);
+    private EditText termEndDate = findViewById(R.id.endDateText);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,28 +38,39 @@ public class termDetailsActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
-        final Observer<List<Course>> termObserver = new Observer<List<Course>>() {
+        t = ViewModelProviders.of(this).get(TermDetailsModel.class);
+        Bundle intent = getIntent().getExtras();
+        if(intent == null) {
+            boolean tNewTerm = true;
+            termTitle.setText("Term Title");
+        } else {
+                int termId = intent.getInt(Term_ID_KEY);
+                t.loadData(termId);
+        }
+        final Observer<Term> termObserver = new Observer<Term>() {
             @Override
-            public void onChanged(List<Course> courses) {
+            public void onChanged(Term currentTerm) {
                 courseData.clear();
-                courseData.addAll(courses);
+                courseData.addAll(t.termCourses.getValue());
+                termTitle.setText(t.liveTerm.getValue().getTitle());
+                termStartDate.setText(t.liveTerm.getValue().getStartDate().toString());
+                termEndDate.setText(t.liveTerm.getValue().getEndDate().toString());
 
-                if(t.termCourses != null) {
+                if(courseData != null) {
                     for (int i = 0; i < courseData.size(); i++) {
                         insertCourseRow(courseData.get(i));
                     }
                 }
             }
         };
-        t = ViewModelProviders.of(this).get(TermDetailsModel.class);
-        t.termCourses.observe(this, termObserver);
+        t.liveTerm.observe(this, termObserver);
     }
 
     private void insertCourseRow(Course add){
         LinearLayout contain = findViewById(R.id.courseContainer);
-        LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View newCourseRow = inflator.inflate(R.layout.summary_card, null);
+        View newCourseRow = inflater.inflate(R.layout.summary_card, null);
         Button button = newCourseRow.findViewById(R.id.title);
         button.setText(add.getTitle());
         EditText start = newCourseRow.findViewById(R.id.startDate);
