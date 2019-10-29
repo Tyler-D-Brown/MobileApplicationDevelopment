@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -23,39 +24,42 @@ import java.util.List;
 import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_KEY;
 
 public class termDetailsActivity extends AppCompatActivity {
-    private TermDetailsModel t;
-    private List<Course> courseData = t.termCourses.getValue();
+    private TermDetailsModel termDetailsModel;
+    private List<Course> courseData;
     private boolean tNewTerm = false;
-    private EditText termTitle = findViewById(R.id.termTitle);
-    private EditText termStartDate = findViewById(R.id.startDateText);
-    private EditText termEndDate = findViewById(R.id.endDateText);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle intent = getIntent().getExtras();
+        termDetailsModel = ViewModelProviders.of(this).get(TermDetailsModel.class);
+        int termId = intent.getInt(Term_ID_KEY);
+        if(termId == -1) {
+            boolean tNewTerm = true;
+            EditText termTitle = findViewById(R.id.termTitle);
+            termDetailsModel.loadData(termId);
+            //termTitle.setText("Term Title");
+        } else {
+            termDetailsModel.loadData(termId);
+        }
+        /*EditText termTitle = findViewById(R.id.termTitle);
+        EditText termStartDate = findViewById(R.id.startDateText);
+        EditText termEndDate = findViewById(R.id.endDateText);*/
         setContentView(R.layout.term_details);
         initViewModel();
     }
 
     private void initViewModel() {
-        t = ViewModelProviders.of(this).get(TermDetailsModel.class);
-        Bundle intent = getIntent().getExtras();
-        if(intent == null) {
-            boolean tNewTerm = true;
-            termTitle.setText("Term Title");
-        } else {
-                int termId = intent.getInt(Term_ID_KEY);
-                t.loadData(termId);
-        }
-        final Observer<Term> termObserver = new Observer<Term>() {
+        final Observer<List<Course>> courseObserver = new Observer<List<Course>>() {
             @Override
-            public void onChanged(Term currentTerm) {
-                courseData.clear();
-                courseData.addAll(t.termCourses.getValue());
-                termTitle.setText(t.liveTerm.getValue().getTitle());
-                termStartDate.setText(t.liveTerm.getValue().getStartDate().toString());
-                termEndDate.setText(t.liveTerm.getValue().getEndDate().toString());
-
+            public void onChanged(@Nullable List<Course> courses) {
+                if(courseData !=null) {
+                    courseData.clear();
+                }
+                if(!courses.isEmpty()){
+                    courseData.addAll(courses);
+                }
                 if(courseData != null) {
                     for (int i = 0; i < courseData.size(); i++) {
                         insertCourseRow(courseData.get(i));
@@ -63,7 +67,8 @@ public class termDetailsActivity extends AppCompatActivity {
                 }
             }
         };
-        t.liveTerm.observe(this, termObserver);
+        termDetailsModel = ViewModelProviders.of(this).get(TermDetailsModel.class);
+        termDetailsModel.termCourses.observe(this, courseObserver);
     }
 
     private void insertCourseRow(Course add){

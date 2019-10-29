@@ -31,6 +31,7 @@ public class AppRepository {
     private AppRepository(Context context) {
         db = AppDatabase.getInstance(context);
         terms = getAllTerms();
+        courses = getAllCourses();
     }
 
     public void add_term(final Term term){
@@ -61,7 +62,7 @@ public class AppRepository {
         return db.termDao().getTermById(id);
     }
 
-    private LiveData<List<Course>> getTermCourses(int id){ return db.courseDao().getCourseByTerm(id); }
+    public LiveData<List<Course>> getTermCourses(int id){ return db.courseDao().getCourseByTerm(id); }
 
     private LiveData<List<Assessment>> getAllAssessments(){ return db.assessmentDao().getAll(); }
 

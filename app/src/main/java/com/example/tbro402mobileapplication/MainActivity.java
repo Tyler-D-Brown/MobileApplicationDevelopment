@@ -1,5 +1,6 @@
 package com.example.tbro402mobileapplication;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,15 +9,16 @@ import com.example.tbro402mobileapplication.DB.DBClass.Term;
 import com.example.tbro402mobileapplication.ViewModel.MainViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.example.tbro402mobileapplication.termDetailsActivity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,9 +31,9 @@ import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_K
 
 public class MainActivity extends AppCompatActivity {
     private MainViewModel mainViewModel;
-    private List<Term> termData = mainViewModel.terms.getValue();
+    private List<Term> termData;
     //TODO validate that the context is correct.
-    private final Context context = getApplicationContext();
+    private final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +45,14 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(context, termDetailsActivity.class);
+                intent.putExtra(Term_ID_KEY, -1);
+                try {
+                    context.startActivity(intent);
+                }
+                catch(Exception e){
+                    Log.d("except", e.toString());
+                }
             }
         });
 
@@ -54,11 +62,14 @@ public class MainActivity extends AppCompatActivity {
     private void initViewModel() {
         final Observer<List<Term>> termObserver = new Observer<List<Term>>() {
             @Override
-            public void onChanged(List<Term> terms) {
-                termData.clear();
-                termData.addAll(terms);
-
-                if(mainViewModel.terms != null) {
+            public void onChanged(@Nullable List<Term> terms) {
+                if(termData !=null) {
+                    termData.clear();
+                }
+                if(!terms.isEmpty()){
+                    termData.addAll(terms);
+                }
+                if(termData != null) {
                     for (int i = 0; i < termData.size(); i++) {
                         insertTermRow(termData.get(i));
                     }
@@ -67,28 +78,6 @@ public class MainActivity extends AppCompatActivity {
         };
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         mainViewModel.terms.observe(this, termObserver);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private void insertTermRow(final Term add){
@@ -105,8 +94,10 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
                       @Override
                       public void onClick(View termButton) {
-                          Intent intent = new Intent(context, termDetailsActivity.class);
+                          Intent intent = new Intent(getBaseContext(), termDetailsActivity.class);
                           intent.putExtra(Term_ID_KEY, add.getId());
+                          Snackbar.make(termButton, "Replace with your own action", Snackbar.LENGTH_LONG)
+                                  .setAction("Action", null).show();
                       }
                   });
 
