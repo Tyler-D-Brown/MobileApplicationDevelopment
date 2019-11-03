@@ -38,6 +38,7 @@ public class TermDetailsModel extends AndroidViewModel {
             public void run() {
                 Term term = termRepository.getTermById(termId);
                 liveTerm.postValue(term);
+                termCourses = termRepository.getTermCourses(termId);
             }
         });
     }
