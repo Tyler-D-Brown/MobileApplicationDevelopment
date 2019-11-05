@@ -67,4 +67,13 @@ public class AppRepository {
     private LiveData<List<Assessment>> getAllAssessments(){ return db.assessmentDao().getAll(); }
 
     private LiveData<List<Assessment>> getCourseAssessments(int id){ return db.assessmentDao().getCourseAssessment(id); }
+
+    public void insertTerm(final Term term) {
+        execute.execute(new Runnable(){
+            @Override
+            public void run(){
+                db.termDao().insertTerm(term);
+            }
+        });
+    }
 }
