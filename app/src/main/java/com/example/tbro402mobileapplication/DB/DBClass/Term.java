@@ -1,5 +1,6 @@
 package com.example.tbro402mobileapplication.DB.DBClass;
 
+
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -7,7 +8,6 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity
-
 public class Term {
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -20,6 +20,13 @@ public class Term {
 
     public Term(int id, String title, Date startDate, Date endDate) {
         this.id = id;
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    @Ignore
+    public Term(String title, Date startDate, Date endDate) {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;

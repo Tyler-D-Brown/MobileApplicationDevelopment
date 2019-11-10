@@ -2,6 +2,8 @@ package com.example.tbro402mobileapplication.ViewModel;
 
 import android.app.Application;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import static android.content.ContentValues.TAG;
 import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_KEY;
 
 public class TermDetailsModel extends AndroidViewModel {
@@ -30,7 +33,6 @@ public class TermDetailsModel extends AndroidViewModel {
 
     public TermDetailsModel(@NonNull Application application) {
         super(application);
-
         termRepository = AppRepository.getInstance(getApplication());
         courses = termRepository.courses;
     }
@@ -46,12 +48,17 @@ public class TermDetailsModel extends AndroidViewModel {
         });
     }
 
-    public void saveTerm(int id) {
-        if(id == -1){
-
+    public void saveTerm(Term term) {
+        Log.i(TAG, "term details: ");
+        Log.i(TAG, "term Title: " + term.getTitle());
+        Log.i(TAG, "term Start: " + term.getStartDate());
+        Log.i(TAG, "term End: " + term.getEndDate());
+        Log.i(TAG, "term ID: " + term.getId());
+        if(term.getId() == -1){
+            term = new Term(term.getTitle(),
+                    term.getStartDate(), term.getEndDate());
+            termRepository.insertTerm(term);
         } else {
-            Term term = liveTerm.getValue();
-
             termRepository.insertTerm(term);
         }
     }

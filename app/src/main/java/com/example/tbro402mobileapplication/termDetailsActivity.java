@@ -19,13 +19,13 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.tbro402mobileapplication.DB.DBClass.Course;
 import com.example.tbro402mobileapplication.DB.DBClass.Term;
-import com.example.tbro402mobileapplication.ViewModel.MainViewModel;
 import com.example.tbro402mobileapplication.ViewModel.TermDetailsModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
 import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_KEY;
 
 public class termDetailsActivity extends AppCompatActivity {
@@ -92,6 +92,7 @@ public class termDetailsActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
+        termDetailsModel = ViewModelProviders.of(this).get(TermDetailsModel.class);
         final Observer<List<Course>> courseObserver = new Observer<List<Course>>() {
             @Override
             public void onChanged(@Nullable List<Course> courses) {
@@ -108,7 +109,6 @@ public class termDetailsActivity extends AppCompatActivity {
                 }
             }
         };
-        termDetailsModel = ViewModelProviders.of(this).get(TermDetailsModel.class);
         termDetailsModel.termCourses.observe(this, courseObserver);
     }
 
@@ -136,17 +136,22 @@ public class termDetailsActivity extends AppCompatActivity {
         EditText termTitle = findViewById(R.id.termTitle);
         EditText termStartDate = findViewById(R.id.startDateText);
         EditText termEndDate = findViewById(R.id.endDateText);
-        if(TextUtils.isEmpty(termTitle.getText().toString()) ||
-                TextUtils.isEmpty(termStartDate.getText().toString()) ||
-                TextUtils.isEmpty(termEndDate.getText().toString())){
+        if(TextUtils.isEmpty(termTitle.getText().toString().trim()) ||
+                TextUtils.isEmpty(termStartDate.getText().toString().trim()) ||
+                TextUtils.isEmpty(termEndDate.getText().toString().trim())){
+            return;
         }
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yy");
         try{
             Term t = new Term(termId, termTitle.getText().toString(),
                     df.parse(termStartDate.getText().toString()),
                     df.parse(termEndDate.getText().toString()));
-            termDetailsModel.liveTerm.postValue(t);
-            termDetailsModel.saveTerm(termId);
+            Log.i(TAG, "term details: ");
+            Log.i(TAG, "term Title: " + t.getTitle());
+            Log.i(TAG, "term Start: " + t.getStartDate());
+            Log.i(TAG, "term End: " + t.getEndDate());
+            Log.i(TAG, "term ID: " + t.getId());
+            termDetailsModel.saveTerm(t);
             finish();
         }
         catch (Exception ex){
@@ -170,12 +175,15 @@ public class termDetailsActivity extends AppCompatActivity {
             Term t = new Term(termId, termTitle.getText().toString(),
                     df.parse(termStartDate.getText().toString()),
                     df.parse(termEndDate.getText().toString()));
-            termDetailsModel.liveTerm.postValue(t);
-            termDetailsModel.saveTerm(termId);
+            termDetailsModel.saveTerm(t);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         }
+    }
+
+    private boolean checkTerm(){
+        return false;
     }
 }

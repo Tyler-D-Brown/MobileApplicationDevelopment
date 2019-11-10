@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_KEY;
@@ -31,7 +32,7 @@ import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_K
 
 public class MainActivity extends AppCompatActivity {
     private MainViewModel mainViewModel;
-    private List<Term> termData;
+    private List<Term> termData = new ArrayList<>();
     //TODO validate that the context is correct.
     private final Context context = this;
 
@@ -40,13 +41,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.terms);
         initViewModel();
+        //termData = ;
 
         FloatingActionButton fab = findViewById(R.id.add_term);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, termDetailsActivity.class);
-                intent.putExtra(Term_ID_KEY, -1);
+                int id = -1;
+                intent.putExtra(Term_ID_KEY, id);
                 try {
                     context.startActivity(intent);
                 }
@@ -60,15 +63,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         final Observer<List<Term>> termObserver = new Observer<List<Term>>() {
             @Override
             public void onChanged(@Nullable List<Term> terms) {
-                if(termData !=null) {
-                    termData.clear();
-                }
-                if(!terms.isEmpty()){
-                    termData.addAll(terms);
-                }
+                termData.clear();
+                termData.addAll(terms);
                 if(termData != null) {
                     for (int i = 0; i < termData.size(); i++) {
                         insertTermRow(termData.get(i));
@@ -76,8 +76,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         mainViewModel.terms.observe(this, termObserver);
+    }
+
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        Intent x = new Intent(MainActivity.this, MainActivity.class);
+        finish();
+        startActivity(x);
     }
 
     private void insertTermRow(final Term add){
