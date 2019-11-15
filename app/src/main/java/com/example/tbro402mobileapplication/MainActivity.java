@@ -24,6 +24,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,21 +96,35 @@ public class MainActivity extends AppCompatActivity {
         View newTermRow = inflator.inflate(R.layout.summary_card, null);
         Button button = newTermRow.findViewById(R.id.title);
         button.setText(add.getTitle());
+        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yy");
         EditText start = newTermRow.findViewById(R.id.startDate);
-        start.setText(add.getStartDate().toString());
+        String date = df.format(add.getStartDate());
+        start.setText(date);
         EditText end = newTermRow.findViewById(R.id.endDate);
-        end.setText(add.getEndDate().toString());
+        date = df.format(add.getEndDate());
+        end.setText(date);
         button.setOnClickListener(new View.OnClickListener() {
                       @Override
                       public void onClick(View termButton) {
                           Intent intent = new Intent(getBaseContext(), termDetailsActivity.class);
                           intent.putExtra(Term_ID_KEY, add.getId());
-                          Snackbar.make(termButton, "Replace with your own action", Snackbar.LENGTH_LONG)
-                                  .setAction("Action", null).show();
+                          try {
+                              context.startActivity(intent);
+                          }
+                          catch(Exception e){
+                              Log.d("except", e.toString());
+                          }
                       }
                   });
-
         ViewGroup insert = contain;
-        insert.addView(newTermRow);
+        newTermRow.setId(add.getId());
+
+        View termRow = insert.findViewById(add.getId());
+        if (termRow == null) {
+            insert.addView(newTermRow);
+        } else {
+            ((ViewGroup)termRow.getParent()).removeView(termRow);
+            insert.addView(newTermRow);
+        }
     }
 }

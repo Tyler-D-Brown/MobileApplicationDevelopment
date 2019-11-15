@@ -32,6 +32,13 @@ public class Term {
         this.endDate = endDate;
     }
 
+    @Ignore
+    public Term(Term t){
+        this.title=t.title;
+        this.startDate=t.startDate;
+        this.endDate=t.endDate;
+    }
+
     public int getId() {
         return id;
     }

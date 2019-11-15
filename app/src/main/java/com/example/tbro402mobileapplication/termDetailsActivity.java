@@ -3,6 +3,7 @@ package com.example.tbro402mobileapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,14 +47,22 @@ public class termDetailsActivity extends AppCompatActivity {
             termDetailsModel.loadData(termId);
 
         } else {
+            Log.i(TAG, "intent received: " + termId);
             tNewTerm = false;
             termDetailsModel.loadData(termId);
-            EditText termTitle = findViewById(R.id.termTitle);
-            termTitle.setText(termDetailsModel.liveTerm.getValue().getTitle());
-            EditText startDate = findViewById(R.id.startDate);
-            startDate.setText(termDetailsModel.liveTerm.getValue().getStartDate().toString());
-            EditText endDate = findViewById(R.id.startDate);
-            endDate.setText(termDetailsModel.liveTerm.getValue().getEndDate().toString());
+            Handler h = new Handler();
+            h.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Log.i(TAG, "termID: " + termDetailsModel.liveTerm.getValue().getId());
+                    EditText Title = findViewById(R.id.termTitle);
+                    Title.setText(termDetailsModel.liveTerm.getValue().getTitle());
+                    EditText startDate = findViewById(R.id.startDate);
+                    startDate.setText(termDetailsModel.liveTerm.getValue().getStartDate().toString());
+                    EditText endDate = findViewById(R.id.startDate);
+                    endDate.setText(termDetailsModel.liveTerm.getValue().getEndDate().toString());
+                }
+            }, 500);
         }
         setContentView(R.layout.term_details);
         initViewModel();

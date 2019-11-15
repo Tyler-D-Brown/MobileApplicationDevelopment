@@ -34,15 +34,6 @@ public class AppRepository {
         courses = getAllCourses();
     }
 
-    public void add_term(final Term term){
-        execute.execute(new Runnable() {
-            @Override
-            public void run() {
-                db.termDao().insertTerm(term);
-            }
-        });
-    }
-
     public void delete_term(final Term term){
         execute.execute(new Runnable() {
             @Override
