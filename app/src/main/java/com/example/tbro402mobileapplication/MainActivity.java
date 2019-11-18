@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insertTermRow(final Term add){
-        LinearLayout contain = findViewById(R.id.termContainer);
+        final LinearLayout contain = findViewById(R.id.termContainer);
         LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View newTermRow = inflator.inflate(R.layout.summary_card, null);
@@ -116,9 +116,17 @@ public class MainActivity extends AppCompatActivity {
                           }
                       }
                   });
-        ViewGroup insert = contain;
+        FloatingActionButton delete = newTermRow.findViewById(R.id.delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View delete) {
+                            mainViewModel.deleteTerm(add.getId());
+                            View termRow = findViewById(R.id.termContainer).findViewById(add.getId());
+                            ((ViewGroup)termRow.getParent()).removeView(termRow);
+                        }
+                    });
         newTermRow.setId(add.getId());
-
+        ViewGroup insert = contain;
         View termRow = insert.findViewById(add.getId());
         if (termRow == null) {
             insert.addView(newTermRow);
