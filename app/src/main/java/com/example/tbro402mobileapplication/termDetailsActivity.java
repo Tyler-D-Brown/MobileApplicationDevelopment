@@ -56,11 +56,13 @@ public class termDetailsActivity extends AppCompatActivity {
                 public void run() {
                     Log.i(TAG, "termID: " + termDetailsModel.liveTerm.getValue().getId());
                     EditText Title = findViewById(R.id.termTitle);
+                    Log.i(TAG, "termTitle: " + termDetailsModel.liveTerm.getValue().getTitle());
                     Title.setText(termDetailsModel.liveTerm.getValue().getTitle());
-                    EditText startDate = findViewById(R.id.startDate);
-                    startDate.setText(termDetailsModel.liveTerm.getValue().getStartDate().toString());
-                    EditText endDate = findViewById(R.id.startDate);
-                    endDate.setText(termDetailsModel.liveTerm.getValue().getEndDate().toString());
+                    EditText startDate = findViewById(R.id.startDateText);
+                    SimpleDateFormat df = new SimpleDateFormat("MM/dd/yy");
+                    startDate.setText(df.format(termDetailsModel.liveTerm.getValue().getStartDate()));
+                    EditText endDate = findViewById(R.id.endDateText);
+                    endDate.setText(df.format(termDetailsModel.liveTerm.getValue().getEndDate()));
                 }
             }, 500);
         }

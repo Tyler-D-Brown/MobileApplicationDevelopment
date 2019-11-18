@@ -56,18 +56,20 @@ public class TermDetailsModel extends AndroidViewModel {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                Term term = new Term(termRepository.getTermById(termId));
-                //liveTerm = new Term(termRepository.getTermById(termId));
-                //Term term = new Term(-1, "testing", new Date(), new Date());
-                try {
-                    Log.i(TAG, "pre post value");
-                    liveTerm.postValue(term);
-                    Log.i(TAG, "Post post value");
-                    Log.i(TAG, "intent received" + termId);
-                    Log.i(TAG, "termID during load data: " + term.getId());
-                    Log.i(TAG, "liveTermID during load data: " + liveTerm.getValue().getId());
-                }catch (Exception exception){
-                    Log.i(TAG, "Exception: " + exception);
+                if(termRepository.getTermById(termId)!=null) {
+                    Term term = new Term(termRepository.getTermById(termId));
+                    //liveTerm = new Term(termRepository.getTermById(termId));
+                    //Term term = new Term(-1, "testing", new Date(), new Date());
+                    try {
+                        Log.i(TAG, "pre post value");
+                        liveTerm.postValue(term);
+                        Log.i(TAG, "Post post value");
+                        Log.i(TAG, "intent received" + termId);
+                        Log.i(TAG, "termID during load data: " + term.getId());
+                        Log.i(TAG, "liveTermID during load data: " + liveTerm.getValue().getId());
+                    } catch (Exception exception) {
+                        Log.i(TAG, "Exception: " + exception);
+                    }
                 }
                 //Log.i(TAG, "termID during load data: " + liveTerm.getValue().getId());
                 termCourses = termRepository.getTermCourses(termId);
