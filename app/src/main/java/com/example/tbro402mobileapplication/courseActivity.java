@@ -3,16 +3,6 @@ package com.example.tbro402mobileapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.example.tbro402mobileapplication.DB.DBClass.Term;
-import com.example.tbro402mobileapplication.ViewModel.MainViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,14 +11,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.example.tbro402mobileapplication.DB.DBClass.Term;
+import com.example.tbro402mobileapplication.ViewModel.MainViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_KEY;
 
-
-public class MainActivity extends AppCompatActivity {
+public class courseActivity extends AppCompatActivity {
     private MainViewModel mainViewModel;
     private List<Term> termData = new ArrayList<>();
     //TODO validate that the context is correct.
@@ -77,14 +75,6 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.terms.observe(this, termObserver);
     }
 
-    @Override
-    public void onRestart(){
-        super.onRestart();
-        Intent x = new Intent(MainActivity.this, MainActivity.class);
-        finish();
-        startActivity(x);
-    }
-
     private void insertTermRow(final Term add){
         final LinearLayout contain = findViewById(R.id.termContainer);
         LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -100,27 +90,27 @@ public class MainActivity extends AppCompatActivity {
         date = df.format(add.getEndDate());
         end.setText(date);
         button.setOnClickListener(new View.OnClickListener() {
-                      @Override
-                      public void onClick(View termButton) {
-                          Intent intent = new Intent(getBaseContext(), termDetailsActivity.class);
-                          intent.putExtra(Term_ID_KEY, add.getId());
-                          try {
-                              context.startActivity(intent);
-                          }
-                          catch(Exception e){
-                              Log.d("except", e.toString());
-                          }
-                      }
-                  });
+            @Override
+            public void onClick(View termButton) {
+                Intent intent = new Intent(getBaseContext(), termDetailsActivity.class);
+                intent.putExtra(Term_ID_KEY, add.getId());
+                try {
+                    context.startActivity(intent);
+                }
+                catch(Exception e){
+                    Log.d("except", e.toString());
+                }
+            }
+        });
         FloatingActionButton delete = newTermRow.findViewById(R.id.delete);
         delete.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View delete) {
-                            mainViewModel.deleteTerm(add.getId());
-                            View termRow = findViewById(R.id.termContainer).findViewById(add.getId());
-                            ((ViewGroup)termRow.getParent()).removeView(termRow);
-                        }
-                    });
+            @Override
+            public void onClick(View delete) {
+                mainViewModel.deleteTerm(add.getId());
+                View termRow = findViewById(R.id.termContainer).findViewById(add.getId());
+                ((ViewGroup)termRow.getParent()).removeView(termRow);
+            }
+        });
         newTermRow.setId(add.getId());
         ViewGroup insert = contain;
         View termRow = insert.findViewById(add.getId());

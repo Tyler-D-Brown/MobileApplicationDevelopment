@@ -36,22 +36,24 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toStartOf="@id/startDateText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/termHeading" />
+        app:layout_constraintTop_toBottomOf="@id/Heading" />
 
     <TextView
-        android:id="@+id/termHeading"
+        android:id="@+id/Heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TermTitle"
-        app:layout_constraintTop_toBottomOf="@id/progress"
+        android:textSize="20sp"
+        android:text="Course Title"
+        app:layout_constraintEnd_toEndOf="@id/termTitle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/termTitle"/>
+        app:layout_constraintTop_toBottomOf="@id/progress" />
 
     <TextView
         android:id="@+id/startDateHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start Date"
+        android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/progress"
         app:layout_constraintStart_toStartOf="@id/startDateText"
         app:layout_constraintEnd_toEndOf="@id/startDateText"/>
@@ -61,6 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="End Date"
+        android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/progress"
         app:layout_constraintStart_toStartOf="@id/endDateText"
         app:layout_constraintEnd_toEndOf="@id/endDateText"/>
@@ -85,6 +88,90 @@
         app:layout_constraintTop_toBottomOf="@id/endDateHeading"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <TextView
+        android:id="@+id/mentorHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mentor Name"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/termTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/termTitle"/>
+
+    <TextView
+        android:id="@+id/mentorPhoneHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone Number"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/termTitle"
+        app:layout_constraintStart_toStartOf="@+id/startDateText"
+        app:layout_constraintEnd_toEndOf="@+id/startDateText"/>
+
+    <TextView
+        android:id="@+id/mentorEmailHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/termTitle"
+        app:layout_constraintStart_toStartOf="@+id/endDateText"
+        app:layout_constraintEnd_toEndOf="@id/endDateText"/>
+
+    <TextView
+        android:id="@+id/mentorName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name"
+        app:layout_constraintTop_toBottomOf="@+id/mentorHeading"
+        app:layout_constraintStart_toStartOf="@+id/mentorHeading"
+        app:layout_constraintEnd_toEndOf="@+id/mentorHeading"/>
+    <TextView
+        android:id="@+id/mentorPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone"
+        app:layout_constraintTop_toBottomOf="@+id/mentorPhoneHeading"
+        app:layout_constraintStart_toStartOf="@+id/mentorPhoneHeading"
+        app:layout_constraintEnd_toEndOf="@id/mentorPhoneHeading"/>
+    <TextView
+        android:id="@+id/mentorEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        app:layout_constraintTop_toBottomOf="@+id/mentorEmailHeading"
+        app:layout_constraintStart_toStartOf="@+id/mentorEmailHeading"
+        app:layout_constraintEnd_toEndOf="@+id/mentorEmailHeading"/>
+
+    <TextView
+        android:id="@+id/noteHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Course Note"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editMentor"/>
+
+    <EditText
+        android:id="@+id/note"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/noteHeading"/>
+
+    <Button
+        android:id="@+id/editMentor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Mentor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mentorPhone"/>
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -92,7 +179,7 @@
         app:layout_constraintBottom_toTopOf="@+id/add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/termTitle">
+        app:layout_constraintTop_toBottomOf="@+id/note">
 
         <LinearLayout
             android:id="@+id/courseContainer"
@@ -134,4 +221,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView"
         app:srcCompat="@android:drawable/ic_input_add" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

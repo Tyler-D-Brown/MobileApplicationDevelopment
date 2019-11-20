@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
+import static com.example.tbro402mobileapplication.Utilities.Constants.Course_ID_KEY;
 import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_KEY;
 
 public class termDetailsActivity extends AppCompatActivity {
@@ -68,12 +69,12 @@ public class termDetailsActivity extends AppCompatActivity {
         }
         setContentView(R.layout.term_details);
         initViewModel();
-        FloatingActionButton add = findViewById(R.id.add_course);
+        FloatingActionButton add = findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, termDetailsActivity.class);
-                intent.putExtra(Term_ID_KEY, -1);
+                Intent intent = new Intent(context, courseActivity.class);
+                intent.putExtra(Course_ID_KEY, -1);
                 try {
                     if(saveTerm()) {
                         context.startActivity(intent);
