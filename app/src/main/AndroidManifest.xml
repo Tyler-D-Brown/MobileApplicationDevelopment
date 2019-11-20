@@ -23,7 +23,11 @@
             android:name=".termDetailsActivity"
             android:label="tbro402MobileApplication"
             android:theme="@style/AppTheme.NoActionBar">
-
+        </activity>
+        <activity
+            android:name=".courseActivity"
+            android:label="tbro402MobileApplication"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

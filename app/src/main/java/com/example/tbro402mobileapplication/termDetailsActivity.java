@@ -79,7 +79,7 @@ public class termDetailsActivity extends AppCompatActivity {
                     if(saveTerm()) {
                         context.startActivity(intent);
                     } else {
-
+                        Log.d("Term not saved", "Save Failed");
                     }
                 }
                 catch(Exception e){

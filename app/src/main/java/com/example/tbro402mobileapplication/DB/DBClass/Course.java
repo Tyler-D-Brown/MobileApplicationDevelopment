@@ -33,6 +33,18 @@ public class Course {
         this.mentor = mentor;
     }
 
+    @Ignore
+    public Course(Course c){
+        this.title = c.getTitle();
+        this.id = c.getId();
+        this.startDate = c.getStartDate();
+        this.endDate = c.getEndDate();
+        this.term = c.getTerm();
+        this.status = c.getStatus();
+        this.note = c.getNote();
+        this.mentor = c.getMentor();
+    }
+
     public String getTitle() {
         return title;
     }
