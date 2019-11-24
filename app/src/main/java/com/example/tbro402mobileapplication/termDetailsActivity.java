@@ -75,6 +75,7 @@ public class termDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(context, courseActivity.class);
                 intent.putExtra(Course_ID_KEY, -1);
+                intent.putExtra(Term_ID_KEY, termDetailsModel.liveTerm.getValue().getId());
                 try {
                     if(saveTerm()) {
                         context.startActivity(intent);

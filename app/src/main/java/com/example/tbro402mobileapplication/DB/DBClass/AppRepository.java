@@ -68,6 +68,15 @@ public class AppRepository {
         });
     }
 
+    public void insertCourse(final Course course){
+        execute.execute(new Runnable() {
+            @Override
+            public void run() {
+                db.courseDao().insertCourse(course);
+            }
+        });
+    }
+
     public Course getCourseById(int id) {
         return db.courseDao().getCourseById(id);
     }

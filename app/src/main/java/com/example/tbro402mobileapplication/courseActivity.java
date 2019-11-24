@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +20,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.tbro402mobileapplication.DB.DBClass.Assessment;
-import com.example.tbro402mobileapplication.DB.DBClass.Term;
-import com.example.tbro402mobileapplication.ViewModel.TermDetailsModel;
+import com.example.tbro402mobileapplication.DB.DBClass.Course;
 import com.example.tbro402mobileapplication.ViewModel.courseModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -53,9 +54,9 @@ public class courseActivity extends AppCompatActivity {
             h.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i(TAG, "termID: " + viewModel.liveCourse.getValue().getId());
+                    Log.i(TAG, "courseID: " + viewModel.liveCourse.getValue().getId());
                     EditText Title = findViewById(R.id.termTitle);
-                    Log.i(TAG, "termTitle: " + viewModel.liveCourse.getValue().getTitle());
+                    Log.i(TAG, "courseTitle: " + viewModel.liveCourse.getValue().getTitle());
                     Title.setText(viewModel.liveCourse.getValue().getTitle());
                     EditText startDate = findViewById(R.id.startDateText);
                     SimpleDateFormat df = new SimpleDateFormat("MM/dd/yy");
@@ -103,8 +104,31 @@ public class courseActivity extends AppCompatActivity {
     }
 
     private boolean saveCourse() {
-
-        return true;
+        Bundle intent = getIntent().getExtras();
+        int courseId = intent.getInt(Course_ID_KEY);
+        int termId = intent.getInt(Term_ID_KEY);
+        EditText termTitle = findViewById(R.id.termTitle);
+        EditText termStartDate = findViewById(R.id.startDateText);
+        EditText termEndDate = findViewById(R.id.endDateText);
+        EditText note = findViewById(R.id.note);
+        if(TextUtils.isEmpty(termTitle.getText().toString()) ||
+                TextUtils.isEmpty(termStartDate.getText().toString()) ||
+                TextUtils.isEmpty(termEndDate.getText().toString())){
+            return false;
+        }
+        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yy");
+        try {
+            //todo properly assign  mentor
+            Course c = new Course(termTitle.getText().toString(), courseId,
+                    df.parse(termStartDate.getText().toString()),
+                    df.parse(termEndDate.getText().toString()), termId, "Enrolled",
+                    note.toString(), 0);
+            viewModel.saveCourse(c);
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 
@@ -148,7 +172,7 @@ public class courseActivity extends AppCompatActivity {
                     context.startActivity(intent);
                 }
                 catch(Exception e){
-                    Log.d("except", e.toString());
+                    Log.d("except: ", e.toString());
                 }
             }
         });

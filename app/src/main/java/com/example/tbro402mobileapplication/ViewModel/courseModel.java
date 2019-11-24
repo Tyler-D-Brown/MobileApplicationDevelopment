@@ -50,18 +50,18 @@ public class courseModel extends AndroidViewModel {
         });
     }
 
-    public void saveCourse(Term term) {
+    public void saveCourse(Course course) {
         Log.i(TAG, "term details: ");
-        Log.i(TAG, "term Title: " + term.getTitle());
-        Log.i(TAG, "term Start: " + term.getStartDate());
-        Log.i(TAG, "term End: " + term.getEndDate());
-        Log.i(TAG, "term ID: " + term.getId());
-        if(term.getId() == -1){
-            term = new Term(term.getTitle(),
-                    term.getStartDate(), term.getEndDate());
-            repository.insertTerm(term);
+        Log.i(TAG, "term Title: " + course.getTitle());
+        Log.i(TAG, "term Start: " + course.getStartDate());
+        Log.i(TAG, "term End: " + course.getEndDate());
+        Log.i(TAG, "term ID: " + course.getId());
+        if(course.getId() == -1){
+            course = new Course(course.getTitle(), course.getStartDate(), course.getEndDate(),
+                    course.getTerm(), course.getStatus(), course.getNote(), course.getMentor());
+            repository.insertCourse(course);
         } else {
-            repository.insertTerm(term);
+            repository.insertCourse(course);
         }
     }
 

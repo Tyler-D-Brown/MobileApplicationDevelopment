@@ -45,6 +45,17 @@ public class Course {
         this.mentor = c.getMentor();
     }
 
+    @Ignore
+    public Course(String title, Date startDate, Date endDate, int term, String status, String note, int mentor) {
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.term = term;
+        this.status = status;
+        this.note = note;
+        this.mentor = mentor;
+    }
+
     public String getTitle() {
         return title;
     }
