@@ -24,6 +24,7 @@ import com.example.tbro402mobileapplication.ViewModel.TermDetailsModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -32,7 +33,7 @@ import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_K
 
 public class termDetailsActivity extends AppCompatActivity {
     private TermDetailsModel termDetailsModel;
-    private List<Course> courseData;
+    private List<Course> courseData = new ArrayList<>();
     private boolean tNewTerm;
     private final Context context = this;
 
@@ -42,7 +43,7 @@ public class termDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         termDetailsModel = ViewModelProviders.of(this).get(TermDetailsModel.class);
         Bundle intent = getIntent().getExtras();
-        int termId = intent.getInt(Term_ID_KEY);
+        final int termId = intent.getInt(Term_ID_KEY);
         if(termId == -1) {
             tNewTerm = true;
             termDetailsModel.loadData(termId);
@@ -75,7 +76,7 @@ public class termDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(context, courseActivity.class);
                 intent.putExtra(Course_ID_KEY, -1);
-                intent.putExtra(Term_ID_KEY, termDetailsModel.liveTerm.getValue().getId());
+                intent.putExtra(Term_ID_KEY, termId);
                 try {
                     if(saveTerm()) {
                         context.startActivity(intent);
@@ -109,12 +110,8 @@ public class termDetailsActivity extends AppCompatActivity {
         final Observer<List<Course>> courseObserver = new Observer<List<Course>>() {
             @Override
             public void onChanged(@Nullable List<Course> courses) {
-                if(courseData !=null) {
-                    courseData.clear();
-                }
-                if(!courses.isEmpty()){
-                    courseData.addAll(courses);
-                }
+                courseData.clear();
+                courseData.addAll(courses);
                 if(courseData != null) {
                     for (int i = 0; i < courseData.size(); i++) {
                         insertCourseRow(courseData.get(i));
@@ -134,10 +131,13 @@ public class termDetailsActivity extends AppCompatActivity {
         View newCourseRow = inflater.inflate(R.layout.summary_card, null);
         Button button = newCourseRow.findViewById(R.id.title);
         button.setText(add.getTitle());
+        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yy");
         EditText start = newCourseRow.findViewById(R.id.startDate);
-        start.setText(add.getStartDate().toString());
+        String date = df.format(add.getStartDate());
+        start.setText(date);
         EditText end = newCourseRow.findViewById(R.id.endDate);
-        end.setText(add.getEndDate().toString());
+        date = df.format(add.getStartDate());
+        end.setText(date);
 
         ViewGroup insert = contain;
         insert.addView(newCourseRow);

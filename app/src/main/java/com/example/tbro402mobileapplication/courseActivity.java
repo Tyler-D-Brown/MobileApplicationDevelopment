@@ -107,6 +107,7 @@ public class courseActivity extends AppCompatActivity {
         Bundle intent = getIntent().getExtras();
         int courseId = intent.getInt(Course_ID_KEY);
         int termId = intent.getInt(Term_ID_KEY);
+        Log.i(TAG, "Term ID: " + termId + " courseId: " + courseId);
         EditText termTitle = findViewById(R.id.termTitle);
         EditText termStartDate = findViewById(R.id.startDateText);
         EditText termEndDate = findViewById(R.id.endDateText);
