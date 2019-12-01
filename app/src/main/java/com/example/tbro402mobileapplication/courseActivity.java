@@ -54,15 +54,15 @@ public class courseActivity extends AppCompatActivity {
             h.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i(TAG, "courseID: " + viewModel.liveCourse.getValue().getId());
                     EditText Title = findViewById(R.id.termTitle);
-                    Log.i(TAG, "courseTitle: " + viewModel.liveCourse.getValue().getTitle());
                     Title.setText(viewModel.liveCourse.getValue().getTitle());
                     EditText startDate = findViewById(R.id.startDateText);
                     SimpleDateFormat df = new SimpleDateFormat("MM/dd/yy");
                     startDate.setText(df.format(viewModel.liveCourse.getValue().getStartDate()));
                     EditText endDate = findViewById(R.id.endDateText);
                     endDate.setText(df.format(viewModel.liveCourse.getValue().getEndDate()));
+                    EditText note = findViewById(R.id.note);
+                    note.setText(viewModel.liveCourse.getValue().getNote());
                 }
             }, 500);
         }
@@ -123,7 +123,7 @@ public class courseActivity extends AppCompatActivity {
             Course c = new Course(termTitle.getText().toString(), courseId,
                     df.parse(termStartDate.getText().toString()),
                     df.parse(termEndDate.getText().toString()), termId, "Enrolled",
-                    note.toString(), 0);
+                    note.getText().toString(), 0);
             viewModel.saveCourse(c);
             return true;
         } catch (Exception ex) {

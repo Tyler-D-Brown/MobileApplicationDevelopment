@@ -43,6 +43,16 @@ public class AppRepository {
         });
     }
 
+    public void deleteCourse(final Course course)
+    {
+        execute.execute(new Runnable() {
+            @Override
+            public void run() {
+                db.courseDao().deleteCourse(course);
+            }
+        });
+    }
+
     private LiveData<List<Term>> getAllTerms(){
         return db.termDao().getAll();
     }

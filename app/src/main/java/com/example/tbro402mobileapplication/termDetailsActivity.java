@@ -45,12 +45,10 @@ public class termDetailsActivity extends AppCompatActivity {
         Bundle intent = getIntent().getExtras();
         final int termId = intent.getInt(Term_ID_KEY);
         if(termId == -1) {
-            tNewTerm = true;
             termDetailsModel.loadData(termId);
 
         } else {
             Log.i(TAG, "intent received: " + termId);
-            tNewTerm = false;
             termDetailsModel.loadData(termId);
             Handler h = new Handler();
             h.postDelayed(new Runnable() {
@@ -124,7 +122,7 @@ public class termDetailsActivity extends AppCompatActivity {
 
 
 
-    private void insertCourseRow(Course add){
+    private void insertCourseRow(final Course add){
         LinearLayout contain = findViewById(R.id.courseContainer);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -139,8 +137,39 @@ public class termDetailsActivity extends AppCompatActivity {
         date = df.format(add.getStartDate());
         end.setText(date);
 
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View button) {
+                Intent intent = new Intent(getBaseContext(), courseActivity.class);
+                intent.putExtra(Course_ID_KEY, add.getId());
+                intent.putExtra(Term_ID_KEY, add.getTerm());
+                try {
+                    context.startActivity(intent);
+                }
+                catch(Exception e){
+                    Log.d("except", e.toString());
+                }
+            }
+        });
+        FloatingActionButton delete = newCourseRow.findViewById(R.id.delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View delete) {
+                termDetailsModel.deleteCourse(add.getId());
+                View termRow = findViewById(R.id.termContainer).findViewById(add.getId());
+                ((ViewGroup)termRow.getParent()).removeView(termRow);
+            }
+        });
+
+        newCourseRow.setId(add.getId());
         ViewGroup insert = contain;
-        insert.addView(newCourseRow);
+        View termRow = insert.findViewById(add.getId());
+        if (termRow == null) {
+            insert.addView(newCourseRow);
+        } else {
+            ((ViewGroup)termRow.getParent()).removeView(termRow);
+            insert.addView(newCourseRow);
+        }
     }
 
     private void saveAndReturn(){

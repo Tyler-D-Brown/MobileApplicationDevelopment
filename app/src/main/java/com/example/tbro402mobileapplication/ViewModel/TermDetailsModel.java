@@ -1,41 +1,35 @@
 package com.example.tbro402mobileapplication.ViewModel;
 
 import android.app.Application;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import com.example.tbro402mobileapplication.DB.DBClass.AppRepository;
 import com.example.tbro402mobileapplication.DB.DBClass.Course;
 import com.example.tbro402mobileapplication.DB.DBClass.Term;
 
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import static android.content.ContentValues.TAG;
-import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_KEY;
 
 public class TermDetailsModel extends AndroidViewModel {
 
     public MutableLiveData<Term> liveTerm = new MutableLiveData<>();
-    private AppRepository termRepository;
+    private AppRepository repository;
     public LiveData<List<Course>> courses;
     public LiveData<List<Course>> termCourses;
     private Executor executor = Executors.newSingleThreadExecutor();
 
     public TermDetailsModel(@NonNull Application application) {
         super(application);
-        termRepository = AppRepository.getInstance(getApplication());
-        courses = termRepository.courses;
+        repository = AppRepository.getInstance(getApplication());
+        courses = repository.courses;
     }
 
     /*public Term getTerm(final int termId){
@@ -44,7 +38,7 @@ public class TermDetailsModel extends AndroidViewModel {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                term. = new Term(termRepository.getTermById(termId));
+                term. = new Term(repository.getTermById(termId));
                 return(term);
             }
         });
@@ -55,15 +49,14 @@ public class TermDetailsModel extends AndroidViewModel {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-            if(termRepository.getTermById(termId)!=null) {
-                //Term term = new Term(termRepository.getTermById(termId));
-                try {
-                    liveTerm.postValue(new Term(termRepository.getTermById(termId)));
-                } catch (Exception exception) {
-                    Log.i(TAG, "Exception: " + exception);
+                if(repository.getTermById(termId)!=null) {
+                    try {
+                        liveTerm.postValue(new Term(repository.getTermById(termId)));
+                    } catch (Exception exception) {
+                        Log.i(TAG, "Exception: " + exception);
+                    }
                 }
-            }
-            termCourses = termRepository.getTermCourses(termId);
+                termCourses = repository.getTermCourses(termId);
             }
         });
     }
@@ -77,9 +70,18 @@ public class TermDetailsModel extends AndroidViewModel {
         if(term.getId() == -1){
             term = new Term(term.getTitle(),
                     term.getStartDate(), term.getEndDate());
-            termRepository.insertTerm(term);
+            repository.insertTerm(term);
         } else {
-            termRepository.insertTerm(term);
+            repository.insertTerm(term);
         }
+    }
+
+    public void deleteCourse(final int id){
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                repository.deleteCourse(repository.getCourseById(id));
+            }
+        });
     }
 }

@@ -38,12 +38,14 @@ public class courseModel extends AndroidViewModel {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                if(repository.getTermById(ID)!=null) {
+                if(repository.getCourseById(ID)!=null) {
                     try {
                         liveCourse.postValue(new Course(repository.getCourseById(ID)));
                     } catch (Exception exception) {
-                        Log.i(TAG, "Exception: " + exception);
+                        Log.e(TAG, "Exception: " + exception);
                     }
+                }else{
+                    Log.e(TAG, "No course found");
                 }
                 courseAssessments = repository.getCourseAssessments(ID);
             }
