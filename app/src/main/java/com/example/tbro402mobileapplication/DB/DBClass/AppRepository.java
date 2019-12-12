@@ -98,4 +98,17 @@ public class AppRepository {
     public void deleteAssessment(Assessment a) {
         db.assessmentDao().deleteAssessment(a);
     }
+
+    public Mentor getMentorByID(int mentor) {
+        return db.mentorDao().getMentorById(mentor);
+    }
+
+    public void insertMentor(final Mentor mentor) {
+        execute.execute(new Runnable() {
+            @Override
+            public void run() {
+                db.mentorDao().insertMentor(mentor);
+            }
+        });
+    }
 }

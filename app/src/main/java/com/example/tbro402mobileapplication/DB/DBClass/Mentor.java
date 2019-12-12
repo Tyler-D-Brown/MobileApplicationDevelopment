@@ -14,10 +14,19 @@ public class Mentor {
     private String phone;
 
     @Ignore
-    public Mentor(){}
+    public Mentor(){
+        this.id = -1;
+    }
 
     public Mentor(int id, String name, String email, String phone) {
         this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+    }
+
+    @Ignore
+    public Mentor(String name, String email, String phone){
         this.name = name;
         this.email = email;
         this.phone = phone;

@@ -32,6 +32,7 @@ import static android.content.ContentValues.TAG;
 import static com.example.tbro402mobileapplication.Utilities.Constants.Assessment_ID_KEY;
 import static com.example.tbro402mobileapplication.Utilities.Constants.Course_ID_KEY;
 import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_KEY;
+import static com.example.tbro402mobileapplication.Utilities.Constants.MENTOR_ID_KEY;
 
 public class courseActivity extends AppCompatActivity {
     private courseModel viewModel;
@@ -101,6 +102,24 @@ public class courseActivity extends AppCompatActivity {
                 finish();
             }
         });
+        Button mentor = findViewById(R.id.editMentor);
+        mentor.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(context, mentorActivity.class);
+                if(viewModel.mentor.getId() == -1) {
+                    intent.putExtra(MENTOR_ID_KEY, -1);
+                }else{
+                    intent.putExtra(MENTOR_ID_KEY, viewModel.mentor.getId());
+                }
+                try{
+                    context.startActivity(intent);
+                }
+                catch(Exception e){
+                    Log.d("exception", e.toString());
+                }
+            }
+        });
     }
 
     private boolean saveCourse() {
@@ -119,11 +138,18 @@ public class courseActivity extends AppCompatActivity {
         }
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yy");
         try {
-            //todo properly assign  mentor
-            Course c = new Course(termTitle.getText().toString(), courseId,
-                    df.parse(termStartDate.getText().toString()),
-                    df.parse(termEndDate.getText().toString()), termId, "Enrolled",
-                    note.getText().toString(), 0);
+            Course c;
+            if(viewModel.mentor.getId() != -1) {
+                c = new Course(termTitle.getText().toString(), courseId,
+                        df.parse(termStartDate.getText().toString()),
+                        df.parse(termEndDate.getText().toString()), termId, "Enrolled",
+                        note.getText().toString(), viewModel.mentor.getId());
+            }else{
+                c = new Course(termTitle.getText().toString(), courseId,
+                        df.parse(termStartDate.getText().toString()),
+                        df.parse(termEndDate.getText().toString()), termId, "Enrolled",
+                        note.getText().toString(), -1);
+            }
             viewModel.saveCourse(c);
             return true;
         } catch (Exception ex) {

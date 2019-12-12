@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.tbro402mobileapplication.DB.DBClass.AppRepository;
 import com.example.tbro402mobileapplication.DB.DBClass.Assessment;
 import com.example.tbro402mobileapplication.DB.DBClass.Course;
+import com.example.tbro402mobileapplication.DB.DBClass.Mentor;
 import com.example.tbro402mobileapplication.DB.DBClass.Term;
 
 import java.util.List;
@@ -26,12 +27,14 @@ public class courseModel extends AndroidViewModel {
     public LiveData<List<Assessment>> assessments;
     public LiveData<List<Assessment>> courseAssessments;
     private Executor executor = Executors.newSingleThreadExecutor();
+    public Mentor mentor;
 
 
     public courseModel(@NonNull Application application) {
         super(application);
         repository = AppRepository.getInstance(getApplication());
         assessments = repository.assessments;
+        mentor = new Mentor();
     }
 
     public void loadData(final int ID) {
@@ -41,6 +44,9 @@ public class courseModel extends AndroidViewModel {
                 if(repository.getCourseById(ID)!=null) {
                     try {
                         liveCourse.postValue(new Course(repository.getCourseById(ID)));
+                        if(liveCourse.getValue().getMentor() != -1){
+                            mentor = repository.getMentorByID(liveCourse.getValue().getMentor());
+                        }
                     } catch (Exception exception) {
                         Log.e(TAG, "Exception: " + exception);
                     }

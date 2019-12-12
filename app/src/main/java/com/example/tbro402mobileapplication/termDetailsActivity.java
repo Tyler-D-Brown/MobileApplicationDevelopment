@@ -156,11 +156,10 @@ public class termDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View delete) {
                 termDetailsModel.deleteCourse(add.getId());
-                View termRow = findViewById(R.id.termContainer).findViewById(add.getId());
+                View termRow = findViewById(R.id.courseContainer).findViewById(add.getId());
                 ((ViewGroup)termRow.getParent()).removeView(termRow);
             }
         });
-
         newCourseRow.setId(add.getId());
         ViewGroup insert = contain;
         View termRow = insert.findViewById(add.getId());
