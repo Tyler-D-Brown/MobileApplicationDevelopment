@@ -1,8 +1,10 @@
 package com.example.tbro402mobileapplication;
 
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -44,9 +46,11 @@ public class mentorActivity extends AppCompatActivity {
                 }
             },500);
         }
+        setContentView(R.layout.mentor);
+//        Log.d("Cancel Mentor ID: ", Integer.toString(findViewById(R.id.cancelMentor).getId()));
 
-        FloatingActionButton cancel = findViewById(R.id.cancel);
-        cancel.setOnClickListener(new View.OnClickListener(){
+        FloatingActionButton can = findViewById(R.id.cancelMentor);
+        can.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 finish();
