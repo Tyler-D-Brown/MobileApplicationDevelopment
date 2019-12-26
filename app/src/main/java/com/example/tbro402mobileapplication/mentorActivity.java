@@ -16,9 +16,12 @@ import com.example.tbro402mobileapplication.ViewModel.mentorViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import static com.example.tbro402mobileapplication.Utilities.Constants.MENTOR_ID_KEY;
+import static com.example.tbro402mobileapplication.Utilities.Constants.Course_ID_KEY;
 
 public class mentorActivity extends AppCompatActivity {
     private mentorViewModel viewModel;
+    private int mentor;
+    private int course;
 
 
     @Override
@@ -26,7 +29,8 @@ public class mentorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(mentorViewModel.class);
         Bundle intent = getIntent().getExtras();
-        int mentor = intent.getInt(MENTOR_ID_KEY);
+        mentor = intent.getInt(MENTOR_ID_KEY);
+        course = intent.getInt(Course_ID_KEY);
 
         if(mentor == -1){
             viewModel.loadData(mentor);
@@ -81,7 +85,7 @@ public class mentorActivity extends AppCompatActivity {
         try{
             Mentor ment = new Mentor(mentor, name.getText().toString(),
                     email.getText().toString(), phone.getText().toString());
-            viewModel.saveMentor(ment);
+            viewModel.saveMentor(ment, course);
             return true;
         }
         catch(Exception e){

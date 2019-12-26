@@ -1,15 +1,16 @@
 package com.example.tbro402mobileapplication.DB.DBClass;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
-
-import com.example.tbro402mobileapplication.Utilities.SampleData;
 
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
+import static android.content.ContentValues.TAG;
 
 public class AppRepository {
     private static AppRepository ourInstance;
@@ -103,11 +104,15 @@ public class AppRepository {
         return db.mentorDao().getMentorById(mentor);
     }
 
-    public void insertMentor(final Mentor mentor) {
+    public void insertMentor(final Mentor mentor, final int course) {
         execute.execute(new Runnable() {
             @Override
             public void run() {
-                db.mentorDao().insertMentor(mentor);
+                long id = db.mentorDao().insertMentor(mentor);
+                Log.e(TAG, Integer.toString(course));
+                Course c = new Course(db.courseDao().getCourseById(course));
+                c.setMentor((int)id);
+                db.courseDao().insertCourse(c);
             }
         });
     }

@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.tbro402mobileapplication.DB.DBClass.AppRepository;
+import com.example.tbro402mobileapplication.DB.DBClass.Course;
 import com.example.tbro402mobileapplication.DB.DBClass.Mentor;
 
 import java.util.concurrent.Executor;
@@ -43,13 +44,18 @@ public class mentorViewModel extends AndroidViewModel {
         );
     }
 
-    public void saveMentor(Mentor ment) {
+    public void saveMentor(Mentor ment, int course) {
         if(ment.getId()==-1){
             Mentor mentor = new Mentor(ment.getName(),ment.getEmail(), ment.getPhone());
-            repository.insertMentor(mentor);
+            repository.insertMentor(mentor, course);
         }
         else {
-            repository.insertMentor(ment);
+            repository.insertMentor(ment, course);
         }
+    }
+
+    public void updateCourse(int course) {
+        Course c =repository.getCourseById(course);
+        repository.insertCourse(c);
     }
 }

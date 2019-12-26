@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface MentorDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertMentor(Mentor ment);
+    long insertMentor(Mentor ment);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMentor(List<Mentor> ment);

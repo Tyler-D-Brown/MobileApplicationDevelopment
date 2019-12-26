@@ -64,6 +64,7 @@ public class courseActivity extends AppCompatActivity {
                     endDate.setText(df.format(viewModel.liveCourse.getValue().getEndDate()));
                     EditText note = findViewById(R.id.note);
                     note.setText(viewModel.liveCourse.getValue().getNote());
+                    Log.e(TAG, Integer.toString(viewModel.liveCourse.getValue().getId()));
                 }
             }, 500);
         }
@@ -109,8 +110,10 @@ public class courseActivity extends AppCompatActivity {
                 Intent intent = new Intent(context, mentorActivity.class);
                 if(viewModel.mentor.getId() == -1) {
                     intent.putExtra(MENTOR_ID_KEY, -1);
+                    intent.putExtra(Course_ID_KEY, viewModel.liveCourse.getValue().getId());
                 }else{
                     intent.putExtra(MENTOR_ID_KEY, viewModel.mentor.getId());
+                    intent.putExtra(Course_ID_KEY, viewModel.liveCourse.getValue().getId());
                 }
                 try{
                     context.startActivity(intent);
