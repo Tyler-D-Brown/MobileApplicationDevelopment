@@ -1,10 +1,8 @@
 package com.example.tbro402mobileapplication;
 
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
