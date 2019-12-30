@@ -30,6 +30,15 @@ public class Mentor {
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.id = -1;
+    }
+
+    @Ignore
+    public Mentor(Mentor m){
+        this.name = m.getName();
+        this.email = m.getEmail();
+        this.phone = m.getPhone();
+        this.id = m.getId();
     }
 
     public int getId() {

@@ -1,6 +1,8 @@
 package com.example.tbro402mobileapplication.ViewModel;
 
 import android.app.Application;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -44,9 +46,6 @@ public class courseModel extends AndroidViewModel {
                 if(repository.getCourseById(ID)!=null) {
                     try {
                         liveCourse.postValue(new Course(repository.getCourseById(ID)));
-                        if(liveCourse.getValue().getMentor() != -1){
-                            mentor = repository.getMentorByID(liveCourse.getValue().getMentor());
-                        }
                     } catch (Exception exception) {
                         Log.e(TAG, "Exception: " + exception);
                     }
@@ -54,6 +53,18 @@ public class courseModel extends AndroidViewModel {
                     Log.e(TAG, "No course found");
                 }
                 courseAssessments = repository.getCourseAssessments(ID);
+            }
+        });
+    }
+
+    public void loadMentor(){
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Log.e(TAG, "course ID " + liveCourse.getValue().getId() + " Mentor ID " + liveCourse.getValue().getMentor());
+                if (liveCourse.getValue().getMentor() != -1) {
+                    mentor = new Mentor(repository.getMentorByID(liveCourse.getValue().getMentor()));
+                }
             }
         });
     }

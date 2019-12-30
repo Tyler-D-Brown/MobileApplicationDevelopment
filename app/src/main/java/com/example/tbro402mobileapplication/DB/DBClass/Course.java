@@ -20,7 +20,10 @@ public class Course {
     private int mentor;
 
     @Ignore
-    public Course() {}
+    public Course() {
+        id = -1;
+        mentor = -1;
+    }
 
     public Course(String title, int id, Date startDate, Date endDate, int term, String status, String note, int mentor) {
         this.title = title;
@@ -113,7 +116,7 @@ public class Course {
     }
 
     public int getMentor() {
-        return mentor;
+        return this.mentor;
     }
 
     public void setMentor(int mentor) {

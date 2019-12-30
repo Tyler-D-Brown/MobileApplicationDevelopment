@@ -111,8 +111,12 @@ public class AppRepository {
                 long id = db.mentorDao().insertMentor(mentor);
                 Log.e(TAG, Integer.toString(course));
                 Course c = new Course(db.courseDao().getCourseById(course));
+                Log.e(TAG, "course ID " + c.getId() + " Mentor ID " + c.getMentor());
+                Log.e(TAG, "new mentor ID" + id);
                 c.setMentor((int)id);
                 db.courseDao().insertCourse(c);
+                c = db.courseDao().getCourseById(course);
+                Log.e(TAG, "course ID " + c.getId() + "Mentor ID " + c.getMentor());
             }
         });
     }

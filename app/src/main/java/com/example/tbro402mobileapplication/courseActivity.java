@@ -55,6 +55,7 @@ public class courseActivity extends AppCompatActivity {
             h.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    viewModel.loadMentor();
                     EditText Title = findViewById(R.id.termTitle);
                     Title.setText(viewModel.liveCourse.getValue().getTitle());
                     EditText startDate = findViewById(R.id.startDateText);
@@ -64,7 +65,15 @@ public class courseActivity extends AppCompatActivity {
                     endDate.setText(df.format(viewModel.liveCourse.getValue().getEndDate()));
                     EditText note = findViewById(R.id.note);
                     note.setText(viewModel.liveCourse.getValue().getNote());
-                    Log.e(TAG, Integer.toString(viewModel.liveCourse.getValue().getId()));
+                    if(viewModel.liveCourse.getValue().getMentor() != -1) {
+                        TextView mentName = findViewById(R.id.mentorName);
+                        mentName.setText(viewModel.mentor.getName());
+                        TextView mentPhone = findViewById(R.id.mentorPhone);
+                        mentPhone.setText(viewModel.mentor.getPhone());
+                        TextView mentEmail = findViewById(R.id.mentorEmail);
+                        mentEmail.setText(viewModel.mentor.getEmail());
+                        Log.e(TAG, Integer.toString(viewModel.liveCourse.getValue().getId()));
+                    }
                 }
             }, 500);
         }
@@ -125,6 +134,7 @@ public class courseActivity extends AppCompatActivity {
         });
     }
 
+    //todo fix update functionality to avoid orphaned elements in the db
     private boolean saveCourse() {
         Bundle intent = getIntent().getExtras();
         int courseId = intent.getInt(Course_ID_KEY);
