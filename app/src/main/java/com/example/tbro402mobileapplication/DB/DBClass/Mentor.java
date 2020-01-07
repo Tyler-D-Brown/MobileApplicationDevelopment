@@ -30,7 +30,6 @@ public class Mentor {
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.id = -1;
     }
 
     @Ignore

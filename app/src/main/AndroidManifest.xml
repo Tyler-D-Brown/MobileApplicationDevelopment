@@ -34,6 +34,11 @@
             android:label="tbro402MobileApplication"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".assessmentActivity"
+            android:label="tbro402MobileApplication"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

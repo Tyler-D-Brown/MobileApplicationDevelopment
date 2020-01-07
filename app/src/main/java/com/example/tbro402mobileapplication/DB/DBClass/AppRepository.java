@@ -120,4 +120,7 @@ public class AppRepository {
             }
         });
     }
+
+    public void insertAssessment(Assessment assess) {
+    }
 }

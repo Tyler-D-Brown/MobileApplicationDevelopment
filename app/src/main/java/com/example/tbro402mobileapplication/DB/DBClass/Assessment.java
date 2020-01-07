@@ -16,9 +16,9 @@ public class Assessment {
     private String title;
     private int course;
     private String type;
-    private String status;
+    private Boolean status;
 
-    public Assessment(int id, Date startDate, Date endDate, String title, int course, String type, String status){
+    public Assessment(int id, Date startDate, Date endDate, String title, int course, String type, Boolean status){
         this.id=id;
         this.startDate=startDate;
         this.endDate=endDate;
@@ -30,6 +30,16 @@ public class Assessment {
 
     @Ignore
     public Assessment(){}
+
+    @Ignore
+    public Assessment(Date startDate, Date endDate, String title, int course, String type, Boolean status) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.title = title;
+        this.course = course;
+        this.type = type;
+        this.status = status;
+    }
 
     public int getId() {
         return id;
@@ -47,7 +57,7 @@ public class Assessment {
         return course;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
@@ -75,7 +85,7 @@ public class Assessment {
         this.startDate = startDate;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
