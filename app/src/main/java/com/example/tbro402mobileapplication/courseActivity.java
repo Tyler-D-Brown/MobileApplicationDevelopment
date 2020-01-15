@@ -139,7 +139,7 @@ public class courseActivity extends AppCompatActivity {
             }
         });
     }
-    
+
     private boolean saveCourse() {
         Bundle intent = getIntent().getExtras();
         int courseId = intent.getInt(Course_ID_KEY);

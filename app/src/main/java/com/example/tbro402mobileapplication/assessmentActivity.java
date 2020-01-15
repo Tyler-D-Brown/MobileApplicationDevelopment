@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,6 +52,17 @@ public class assessmentActivity extends AppCompatActivity {
                     start.setText(df.format(viewModel.liveAssessment.getValue().getStartDate()));
                     EditText end = findViewById(R.id.end);
                     end.setText(df.format(viewModel.liveAssessment.getValue().getEndDate()));
+                    if (viewModel.liveAssessment.getValue().getType()=="Performance") {
+                        RadioButton performance = findViewById(R.id.performance);
+                        performance.setChecked(true);
+                    }else{
+                        RadioButton objective = findViewById(R.id.objective);
+                        objective.setChecked(true);
+                    }
+                    if(viewModel.liveAssessment.getValue().getStatus()==true){
+                        CheckBox complete = findViewById(R.id.status);
+                        complete.isChecked();
+                    }
                 }
             },500);
         }
