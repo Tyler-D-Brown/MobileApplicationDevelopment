@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -84,11 +85,13 @@ public class courseActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(courseID == -1){
+                    Toast.makeText(context, "Please save the course before adding an Assessment.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(context, assessmentActivity.class);
                 intent.putExtra(Assessment_ID_KEY, -1);
-                if(courseID !=-1) {
-                    intent.putExtra(Course_ID_KEY, courseID);
-                }
+                intent.putExtra(Course_ID_KEY, courseID);
                 try {
                     if(saveCourse()) {
                         context.startActivity(intent);
@@ -120,14 +123,13 @@ public class courseActivity extends AppCompatActivity {
         mentor.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(context, mentorActivity.class);
-                if(viewModel.mentor.getId() == -1) {
-                    intent.putExtra(MENTOR_ID_KEY, -1);
-                    intent.putExtra(Course_ID_KEY, viewModel.liveCourse.getValue().getId());
-                }else{
-                    intent.putExtra(MENTOR_ID_KEY, viewModel.mentor.getId());
-                    intent.putExtra(Course_ID_KEY, viewModel.liveCourse.getValue().getId());
+                if(courseID == -1){
+                    Toast.makeText(context, "Please save the course before adding a Mentor.", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                Intent intent = new Intent(context, mentorActivity.class);
+                intent.putExtra(MENTOR_ID_KEY, viewModel.mentor.getId());
+                intent.putExtra(Course_ID_KEY, viewModel.liveCourse.getValue().getId());
                 try{
                     context.startActivity(intent);
                 }
@@ -137,8 +139,7 @@ public class courseActivity extends AppCompatActivity {
             }
         });
     }
-
-    //todo fix update functionality to avoid orphaned elements in the db
+    
     private boolean saveCourse() {
         Bundle intent = getIntent().getExtras();
         int courseId = intent.getInt(Course_ID_KEY);
