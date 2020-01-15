@@ -5,11 +5,13 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.tbro402mobileapplication.DB.DBClass.AppRepository;
 import com.example.tbro402mobileapplication.DB.DBClass.Assessment;
 
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -44,10 +46,40 @@ public class assessmentViewModel extends AndroidViewModel {
     }
 
     public void saveAssessment(Assessment assess) {
+        Log.i(TAG, "id: " + assess.getId());
+        Log.i(TAG, "Course: " + assess.getCourse());
+        Log.i(TAG, "title:" + assess.getTitle());
+        Log.i(TAG, "type: " + assess.getType());
+        Log.i(TAG, "start: "+ assess.getStartDate());
+        Log.i(TAG, "end: " + assess.getEndDate());
+        Log.i(TAG, "Status: " + assess.getStatus());
+
         if(assess.getId()==-1){
             Assessment assessment = new Assessment(assess.getStartDate(), assess.getEndDate(),
                     assess.getTitle(), assess.getCourse(), assess.getType(), assess.getStatus());
-            repository.insertAssessment(assessment);
+            try {
+                Log.i(TAG, "id: " + assessment.getId());
+            }catch(Exception e){
+                Log.i(TAG,"ID null");
+            }
+            Log.i(TAG, "Course: " + assessment.getCourse());
+            Log.i(TAG, "title:" + assessment.getTitle());
+            Log.i(TAG, "type: " + assessment.getType());
+            Log.i(TAG, "start: "+ assessment.getStartDate());
+            Log.i(TAG, "end: " + assessment.getEndDate());
+            Log.i(TAG, "Status: " + assessment.getStatus());
+            if(repository.insertAssessment(assessment)) {
+                LiveData<List<Assessment>> test = repository.getAllAssessments();
+                if (test.getValue() != null) {
+                    for (int i = 0; i < test.getValue().size(); i++) {
+                        Log.e(TAG, "assessment Title: " + test.getValue().get(i).getTitle() + " Course ID: " + test.getValue().get(i).getCourse());
+                    }
+                } else {
+                    Log.e(TAG, "no assessments found");
+                }
+            }else{
+                Log.e(TAG, "insert failed");
+            }
         }
         else {
             repository.insertAssessment(assess);

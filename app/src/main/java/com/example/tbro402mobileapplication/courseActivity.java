@@ -44,10 +44,9 @@ public class courseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(courseModel.class);
         Bundle intent = getIntent().getExtras();
-        int courseID = intent.getInt(Course_ID_KEY);
+        final int courseID = intent.getInt(Course_ID_KEY);
         if(courseID == -1) {
             viewModel.loadData(courseID);
-
         } else {
             Log.i(TAG, "intent received: " + courseID);
             viewModel.loadData(courseID);
@@ -85,6 +84,9 @@ public class courseActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(context, assessmentActivity.class);
                 intent.putExtra(Assessment_ID_KEY, -1);
+                if(courseID !=-1) {
+                    intent.putExtra(Course_ID_KEY, courseID);
+                }
                 try {
                     if(saveCourse()) {
                         context.startActivity(intent);
@@ -181,6 +183,7 @@ public class courseActivity extends AppCompatActivity {
                 assessmentsData.addAll(assessments);
                 if(assessmentsData != null) {
                     for (int i = 0; i < assessmentsData.size(); i++) {
+                        Log.e(TAG, "assessment Title: " + assessmentsData.get(i).getTitle());
                         insertAssessmentRow(assessmentsData.get(i));
                     }
                 }
@@ -190,17 +193,17 @@ public class courseActivity extends AppCompatActivity {
     }
 
     private void insertAssessmentRow(final Assessment add){
-        final LinearLayout contain = findViewById(R.id.termContainer);
+        final LinearLayout contain = findViewById(R.id.courseContainer);
         LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View newTermRow = inflator.inflate(R.layout.summary_card, null);
-        Button button = newTermRow.findViewById(R.id.title);
+        final View newRow = inflator.inflate(R.layout.summary_card, null);
+        Button button = newRow.findViewById(R.id.title);
         button.setText(add.getTitle());
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yy");
-        EditText start = newTermRow.findViewById(R.id.startDate);
+        EditText start = newRow.findViewById(R.id.startDate);
         String date = df.format(add.getStartDate());
         start.setText(date);
-        EditText end = newTermRow.findViewById(R.id.endDate);
+        EditText end = newRow.findViewById(R.id.endDate);
         date = df.format(add.getEndDate());
         end.setText(date);
         button.setOnClickListener(new View.OnClickListener() {
@@ -216,23 +219,23 @@ public class courseActivity extends AppCompatActivity {
                 }
             }
         });
-        FloatingActionButton delete = newTermRow.findViewById(R.id.delete);
+        FloatingActionButton delete = newRow.findViewById(R.id.delete);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View delete) {
                 viewModel.deleteAssessment(add.getId());
                 View termRow = findViewById(R.id.termContainer).findViewById(add.getId());
-                ((ViewGroup)termRow.getParent()).removeView(termRow);
+                ((ViewGroup)termRow.getParent()).removeView(newRow);
             }
         });
-        newTermRow.setId(add.getId());
+        newRow.setId(add.getId());
         ViewGroup insert = contain;
         View termRow = insert.findViewById(add.getId());
         if (termRow == null) {
-            insert.addView(newTermRow);
+            insert.addView(newRow);
         } else {
             ((ViewGroup)termRow.getParent()).removeView(termRow);
-            insert.addView(newTermRow);
+            insert.addView(newRow);
         }
     }
 }

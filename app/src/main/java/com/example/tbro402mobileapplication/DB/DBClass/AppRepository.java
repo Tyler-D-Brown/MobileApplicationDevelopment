@@ -66,7 +66,7 @@ public class AppRepository {
 
     public LiveData<List<Course>> getTermCourses(int id){ return db.courseDao().getCourseByTerm(id); }
 
-    private LiveData<List<Assessment>> getAllAssessments(){ return db.assessmentDao().getAll(); }
+    public LiveData<List<Assessment>> getAllAssessments(){ return db.assessmentDao().getAll(); }
 
     public LiveData<List<Assessment>> getCourseAssessments(int id){ return db.assessmentDao().getCourseAssessment(id); }
 
@@ -121,6 +121,13 @@ public class AppRepository {
         });
     }
 
-    public void insertAssessment(Assessment assess) {
+    public boolean insertAssessment(final Assessment assess) {
+        execute.execute(new Runnable() {
+            @Override
+            public void run() {
+                db.assessmentDao().insertAssessment(assess);
+            }
+        });
+        return true;
     }
 }

@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 
+import static android.content.ContentValues.TAG;
 import static com.example.tbro402mobileapplication.Utilities.Constants.Assessment_ID_KEY;
 import static com.example.tbro402mobileapplication.Utilities.Constants.Course_ID_KEY;
 
@@ -33,7 +34,7 @@ public class assessmentActivity extends AppCompatActivity {
         Bundle intent = getIntent().getExtras();
         assessment = intent.getInt(Assessment_ID_KEY);
         course = intent.getInt(Course_ID_KEY);
-
+        Log.i(TAG, "course ID received" + course);
         if(assessment == -1){
             viewModel.loadData(assessment);
         }
