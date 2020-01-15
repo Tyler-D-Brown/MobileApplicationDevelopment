@@ -64,7 +64,7 @@ public class courseActivity extends AppCompatActivity {
                     endDate.setText(df.format(viewModel.liveCourse.getValue().getEndDate()));
                     EditText note = findViewById(R.id.note);
                     note.setText(viewModel.liveCourse.getValue().getNote());
-                    if(viewModel.liveCourse.getValue().getMentor() != -1) {
+                    try {
                         TextView mentName = findViewById(R.id.mentorName);
                         mentName.setText(viewModel.mentor.getName());
                         TextView mentPhone = findViewById(R.id.mentorPhone);
@@ -72,12 +72,14 @@ public class courseActivity extends AppCompatActivity {
                         TextView mentEmail = findViewById(R.id.mentorEmail);
                         mentEmail.setText(viewModel.mentor.getEmail());
                         Log.e(TAG, Integer.toString(viewModel.liveCourse.getValue().getId()));
+                    } catch (Exception e) {
+                        Log.i(TAG, "mentor doesn't exist");
                     }
+                    initViewModel();
                 }
             }, 500);
         }
         setContentView(R.layout.course);
-        initViewModel();
         FloatingActionButton add = findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,10 +195,10 @@ public class courseActivity extends AppCompatActivity {
     }
 
     private void insertAssessmentRow(final Assessment add){
-        final LinearLayout contain = findViewById(R.id.courseContainer);
+        LinearLayout contain = findViewById(R.id.courseContainer);
         LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        final View newRow = inflator.inflate(R.layout.summary_card, null);
+        View newRow = inflator.inflate(R.layout.summary_card, null);
         Button button = newRow.findViewById(R.id.title);
         button.setText(add.getTitle());
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yy");
@@ -208,7 +210,7 @@ public class courseActivity extends AppCompatActivity {
         end.setText(date);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View termButton) {
+            public void onClick(View Button) {
                 Intent intent = new Intent(getBaseContext(), assessmentActivity.class);
                 intent.putExtra(Assessment_ID_KEY, add.getId());
                 try {
@@ -220,15 +222,15 @@ public class courseActivity extends AppCompatActivity {
             }
         });
         FloatingActionButton delete = newRow.findViewById(R.id.delete);
+        newRow.setId(add.getId());
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View delete) {
                 viewModel.deleteAssessment(add.getId());
-                View termRow = findViewById(R.id.termContainer).findViewById(add.getId());
-                ((ViewGroup)termRow.getParent()).removeView(newRow);
+                View assessRow = findViewById(R.id.courseContainer).findViewById(add.getId());
+                ((ViewGroup)assessRow.getParent()).removeView(assessRow);
             }
         });
-        newRow.setId(add.getId());
         ViewGroup insert = contain;
         View termRow = insert.findViewById(add.getId());
         if (termRow == null) {

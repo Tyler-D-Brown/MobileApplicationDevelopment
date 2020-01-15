@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,8 +35,8 @@ import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_K
 public class termDetailsActivity extends AppCompatActivity {
     private TermDetailsModel termDetailsModel;
     private List<Course> courseData = new ArrayList<>();
-    private boolean tNewTerm;
     private final Context context = this;
+    private int termId;
 
 
     @Override
@@ -43,7 +44,8 @@ public class termDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         termDetailsModel = ViewModelProviders.of(this).get(TermDetailsModel.class);
         Bundle intent = getIntent().getExtras();
-        final int termId = intent.getInt(Term_ID_KEY);
+        termId = intent.getInt(Term_ID_KEY);
+        Log.i(TAG, "termId received: " + termId);
         if(termId == -1) {
             termDetailsModel.loadData(termId);
 
@@ -72,6 +74,10 @@ public class termDetailsActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(termId == -1){
+                    Toast.makeText(context, "Please save the term before adding a Course.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(context, courseActivity.class);
                 intent.putExtra(Course_ID_KEY, -1);
                 intent.putExtra(Term_ID_KEY, termId);

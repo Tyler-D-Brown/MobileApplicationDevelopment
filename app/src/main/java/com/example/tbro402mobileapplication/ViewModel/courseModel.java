@@ -47,13 +47,13 @@ public class courseModel extends AndroidViewModel {
                     try {
                         liveCourse.postValue(new Course(repository.getCourseById(ID)));
                         courseAssessments = repository.getCourseAssessments(ID);
-                        if(courseAssessments != null) {
+                        /*if(repository.getCourseAssessments(ID) != null) {
                             for (int i = 0; i < courseAssessments.getValue().size(); i++) {
                                 Log.e(TAG, "assessment Title: " + courseAssessments.getValue().get(i).getTitle());
                             }
                         }else{
                             Log.e(TAG, "no assessments found");
-                        }
+                        }*/
                     } catch (Exception exception) {
                         Log.e(TAG, "Exception: " + exception);
                     }

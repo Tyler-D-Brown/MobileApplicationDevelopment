@@ -68,18 +68,7 @@ public class assessmentViewModel extends AndroidViewModel {
             Log.i(TAG, "start: "+ assessment.getStartDate());
             Log.i(TAG, "end: " + assessment.getEndDate());
             Log.i(TAG, "Status: " + assessment.getStatus());
-            if(repository.insertAssessment(assessment)) {
-                LiveData<List<Assessment>> test = repository.getAllAssessments();
-                if (test.getValue() != null) {
-                    for (int i = 0; i < test.getValue().size(); i++) {
-                        Log.e(TAG, "assessment Title: " + test.getValue().get(i).getTitle() + " Course ID: " + test.getValue().get(i).getCourse());
-                    }
-                } else {
-                    Log.e(TAG, "no assessments found");
-                }
-            }else{
-                Log.e(TAG, "insert failed");
-            }
+            repository.insertAssessment(assessment);
         }
         else {
             repository.insertAssessment(assess);

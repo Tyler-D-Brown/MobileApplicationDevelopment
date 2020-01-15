@@ -121,13 +121,12 @@ public class AppRepository {
         });
     }
 
-    public boolean insertAssessment(final Assessment assess) {
+    public void insertAssessment(final Assessment assess) {
         execute.execute(new Runnable() {
             @Override
             public void run() {
                 db.assessmentDao().insertAssessment(assess);
             }
         });
-        return true;
     }
 }
