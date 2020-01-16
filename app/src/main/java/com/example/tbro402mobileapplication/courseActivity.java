@@ -28,7 +28,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Calendar;
 
 import static android.content.ContentValues.TAG;
 import static com.example.tbro402mobileapplication.Utilities.Constants.Assessment_ID_KEY;
@@ -78,6 +80,18 @@ public class courseActivity extends AppCompatActivity {
                         Log.i(TAG, "mentor doesn't exist");
                     }
                     initViewModel();
+                    Date currentTime = Calendar.getInstance().getTime();
+                    String date = df.format(currentTime);
+                    Log.i(TAG, date);
+                    Log.i(TAG, df.format(viewModel.liveCourse.getValue().getStartDate()));
+                    if(date.equals(df.format(viewModel.liveCourse.getValue().getStartDate()))){
+                        Toast.makeText(context, "Course Starts Today", Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "Course Start today");
+                    }
+                    if(date.equals(df.format(viewModel.liveCourse.getValue().getEndDate()))){
+                        Toast.makeText(context, "Course Ends Today", Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "Course ends today");
+                    }
                 }
             }, 500);
         }

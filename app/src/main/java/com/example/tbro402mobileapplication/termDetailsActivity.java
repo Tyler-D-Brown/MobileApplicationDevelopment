@@ -140,7 +140,7 @@ public class termDetailsActivity extends AppCompatActivity {
         String date = df.format(add.getStartDate());
         start.setText(date);
         EditText end = newCourseRow.findViewById(R.id.endDate);
-        date = df.format(add.getStartDate());
+        date = df.format(add.getEndDate());
         end.setText(date);
 
         button.setOnClickListener(new View.OnClickListener() {

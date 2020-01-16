@@ -1,5 +1,6 @@
 package com.example.tbro402mobileapplication;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -9,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -18,6 +20,8 @@ import com.example.tbro402mobileapplication.ViewModel.assessmentViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import static android.content.ContentValues.TAG;
 import static com.example.tbro402mobileapplication.Utilities.Constants.Assessment_ID_KEY;
@@ -27,6 +31,7 @@ public class assessmentActivity extends AppCompatActivity {
     private int course;
     private int assessment;
     private assessmentViewModel viewModel;
+    private final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,18 @@ public class assessmentActivity extends AppCompatActivity {
                     if(viewModel.liveAssessment.getValue().getStatus()==true){
                         CheckBox complete = findViewById(R.id.status);
                         complete.setChecked(true);
+                    }
+                    Date currentTime = Calendar.getInstance().getTime();
+                    String date = df.format(currentTime);
+                    Log.i(TAG, date);
+                    Log.i(TAG, df.format(viewModel.liveAssessment.getValue().getStartDate()));
+                    if(date.equals(df.format(viewModel.liveAssessment.getValue().getStartDate()))){
+                        Toast.makeText(context, "Assessment work starts today", Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "Course Start today");
+                    }
+                    if(date.equals(df.format(viewModel.liveAssessment.getValue().getEndDate()))){
+                        Toast.makeText(context, "Assessment is due today", Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "Course ends today");
                     }
                 }
             },500);
