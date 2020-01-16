@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.tbro402mobileapplication.DB.DBClass.AppRepository;
 
+import com.example.tbro402mobileapplication.DB.DBClass.Course;
 import com.example.tbro402mobileapplication.DB.DBClass.Term;
 
 import java.util.List;
@@ -16,14 +17,20 @@ import java.util.concurrent.Executors;
 
 public class MainViewModel extends AndroidViewModel {
     public LiveData<List<Term>> terms;
-    private AppRepository repository;
+    public AppRepository repository;
     private Executor executor = Executors.newSingleThreadExecutor();
+    public LiveData<List<Course>> courses;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
 
         repository = AppRepository.getInstance(application.getApplicationContext());
         terms = repository.terms;
+    }
+
+    public void getCourses(int id){
+        courses = repository.getTermCourses(id);
+
     }
 
     public void deleteTerm(final int id){

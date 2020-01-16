@@ -61,7 +61,7 @@ public class assessmentActivity extends AppCompatActivity {
                     }
                     if(viewModel.liveAssessment.getValue().getStatus()==true){
                         CheckBox complete = findViewById(R.id.status);
-                        complete.isChecked();
+                        complete.setChecked(true);
                     }
                 }
             },500);

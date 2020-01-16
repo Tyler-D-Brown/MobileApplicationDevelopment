@@ -4,12 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.tbro402mobileapplication.DB.DBClass.AppRepository;
+import com.example.tbro402mobileapplication.DB.DBClass.Course;
 import com.example.tbro402mobileapplication.DB.DBClass.Term;
 import com.example.tbro402mobileapplication.ViewModel.MainViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -20,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,15 +36,16 @@ import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_K
 public class MainActivity extends AppCompatActivity {
     private MainViewModel mainViewModel;
     private List<Term> termData = new ArrayList<>();
-    //TODO validate that the context is correct.
+    public List<Course> termCourses = new ArrayList<>();
     private final Context context = this;
+    private final LifecycleOwner owner = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.terms);
         initViewModel();
-        //termData = ;
+
 
         FloatingActionButton fab = findViewById(R.id.add);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -116,9 +122,22 @@ public class MainActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View delete) {
-                            mainViewModel.deleteTerm(add.getId());
-                            View termRow = findViewById(R.id.termContainer).findViewById(add.getId());
-                            ((ViewGroup)termRow.getParent()).removeView(termRow);
+                            mainViewModel.getCourses(add.getId());
+                            final Observer<List<Course>> courseObserver = new Observer<List<Course>>() {
+                                @Override
+                                public void onChanged(@Nullable List<Course> courses) {
+                                    termCourses.clear();
+                                    termCourses.addAll(courses);
+                                    if(termCourses.size() == 0){
+                                        mainViewModel.deleteTerm(add.getId());
+                                        View termRow = findViewById(R.id.termContainer).findViewById(add.getId());
+                                        ((ViewGroup)termRow.getParent()).removeView(termRow);
+                                    }else{
+                                        Toast.makeText(context, "Please delete courses before deleting term", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            };
+                            mainViewModel.courses.observe(owner, courseObserver);
                         }
                     });
         newTermRow.setId(add.getId());
