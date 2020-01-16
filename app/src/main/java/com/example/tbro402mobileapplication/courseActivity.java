@@ -2,6 +2,7 @@ package com.example.tbro402mobileapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -85,22 +86,25 @@ public class courseActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(courseID == -1){
-                    Toast.makeText(context, "Please save the course before adding an Assessment.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Intent intent = new Intent(context, assessmentActivity.class);
-                intent.putExtra(Assessment_ID_KEY, -1);
-                intent.putExtra(Course_ID_KEY, courseID);
-                try {
-                    if(saveCourse()) {
-                        context.startActivity(intent);
-                    } else {
-                        Log.d("Course not saved", "Save Failed");
+                if(assessmentsData.size()<5) {
+                    if (courseID == -1) {
+                        Toast.makeText(context, "Please save the course before adding an Assessment.", Toast.LENGTH_SHORT).show();
+                        return;
                     }
-                }
-                catch(Exception e){
-                    Log.d("except", e.toString());
+                    Intent intent = new Intent(context, assessmentActivity.class);
+                    intent.putExtra(Assessment_ID_KEY, -1);
+                    intent.putExtra(Course_ID_KEY, courseID);
+                    try {
+                        if (saveCourse()) {
+                            context.startActivity(intent);
+                        } else {
+                            Log.d("Course not saved", "Save Failed");
+                        }
+                    } catch (Exception e) {
+                        Log.d("except", e.toString());
+                    }
+                }else{
+                    Toast.makeText(context, "only 5 assessments are allowed per course", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -135,6 +139,21 @@ public class courseActivity extends AppCompatActivity {
                 }
                 catch(Exception e){
                     Log.d("exception", e.toString());
+                }
+            }
+        });
+        FloatingActionButton share = findViewById(R.id.share);
+        share.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                EditText note = findViewById(R.id.note);
+                if(note.getText()==null){
+                    Toast.makeText(context,"no note to share", Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                    smsIntent.setData(Uri.parse("sms:"));
+                    smsIntent.putExtra("sms_body", note.getText().toString());
+                    startActivity(smsIntent);
                 }
             }
         });
