@@ -70,6 +70,10 @@ public class AppRepository {
 
     public LiveData<List<Assessment>> getCourseAssessments(int id){ return db.assessmentDao().getCourseAssessment(id); }
 
+    public int getCompletedAssessments(){ return db.assessmentDao().getCompletedAssessments(); }
+
+    public int getAssessmentCount(){ return db.assessmentDao().getAssessmentCount(); }
+
     public void insertTerm(final Term term) {
         execute.execute(new Runnable(){
             @Override

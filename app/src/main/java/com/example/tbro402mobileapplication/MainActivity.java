@@ -2,6 +2,7 @@ package com.example.tbro402mobileapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 
 import com.example.tbro402mobileapplication.DB.DBClass.AppRepository;
@@ -24,11 +25,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_KEY;
 
@@ -45,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.terms);
         initViewModel();
-
-
         FloatingActionButton fab = findViewById(R.id.add);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +63,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        try {
+            ProgressBar degreeProgress = findViewById(R.id.progressBar);
+            degreeProgress.setMax(mainViewModel.getAssess());
+            degreeProgress.setProgress(mainViewModel.getCompletedAssess());
+        }catch(Exception e){
+            Log.i("Danger Will Robinson", e.toString());
+        }
 
     }
 

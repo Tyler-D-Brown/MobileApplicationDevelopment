@@ -34,5 +34,8 @@ public interface AssessmentDao {
     int deleteAll();
 
     @Query("SELECT COUNT(*) FROM Assessment")
-    int getCount();
+    int getAssessmentCount();
+
+    @Query("SELECT COUNT(*) FROM Assessment WHERE status = 1")
+    int getCompletedAssessments();
 }
