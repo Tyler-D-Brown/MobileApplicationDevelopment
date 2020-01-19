@@ -56,6 +56,7 @@ public class MainViewModel extends AndroidViewModel {
             }
         });
         try {
+            Log.i("value", "assessment total" + i.get());
             return i.get();
         }catch(Exception e){
             Log.i("Error", e.toString());
@@ -71,6 +72,7 @@ public class MainViewModel extends AndroidViewModel {
             }
         });
         try {
+            Log.i("value", "Completed assessment total" + i.get());
             return i.get();
         }catch(Exception e){
             Log.i("Error", e.toString());

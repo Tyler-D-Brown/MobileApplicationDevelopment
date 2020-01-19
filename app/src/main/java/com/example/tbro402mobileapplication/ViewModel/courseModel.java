@@ -17,8 +17,11 @@ import com.example.tbro402mobileapplication.DB.DBClass.Mentor;
 import com.example.tbro402mobileapplication.DB.DBClass.Term;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import static android.content.ContentValues.TAG;
 
@@ -30,7 +33,7 @@ public class courseModel extends AndroidViewModel {
     public LiveData<List<Assessment>> courseAssessments;
     private Executor executor = Executors.newSingleThreadExecutor();
     public Mentor mentor;
-
+    private ExecutorService getterService = Executors.newSingleThreadExecutor();
 
     public courseModel(@NonNull Application application) {
         super(application);
@@ -99,5 +102,37 @@ public class courseModel extends AndroidViewModel {
                 repository.deleteAssessment(repository.getassessmentById(id));
             }
         });
+    }
+
+    public int getAssess(final int id){
+        Future<Integer> i = getterService.submit(new Callable<Integer>() {
+            @Override
+            public Integer call(){
+                return repository.getAssessmentByCourse(id);
+            }
+        });
+        try {
+            Log.i("value", "assessment total" + i.get());
+            return i.get();
+        }catch(Exception e){
+            Log.i("Error", e.toString());
+        }
+        return -1;
+    }
+
+    public int getCompletedAssess(final int id){
+        Future<Integer> i = getterService.submit(new Callable<Integer>() {
+            @Override
+            public Integer call(){
+                return repository.getCompleteAssessmentByCourse(id);
+            }
+        });
+        try {
+            Log.i("value", "Completed assessment total" + i.get());
+            return i.get();
+        }catch(Exception e){
+            Log.i("Error", e.toString());
+        }
+        return -1;
     }
 }

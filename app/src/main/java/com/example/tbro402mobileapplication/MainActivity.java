@@ -65,12 +65,18 @@ public class MainActivity extends AppCompatActivity {
         });
         try {
             ProgressBar degreeProgress = findViewById(R.id.progressBar);
-            degreeProgress.setMax(mainViewModel.getAssess());
-            degreeProgress.setProgress(mainViewModel.getCompletedAssess());
+            int completed = mainViewModel.getCompletedAssess();
+            Log.i("complete", "completed " + completed);
+            int assessments = mainViewModel.getAssess();
+            Log.i("total", ""+assessments);
+            double progress = (double)completed/assessments;
+            Log.i("progress percent", "progress " + progress);
+            progress = progress*100;
+            Log.i("progress percent", "progress " + progress);
+            degreeProgress.setProgress((int)progress);
         }catch(Exception e){
             Log.i("Danger Will Robinson", e.toString());
         }
-
     }
 
     private void initViewModel() {
@@ -91,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRestart(){
+    public void onRestart() {
         super.onRestart();
         Intent x = new Intent(MainActivity.this, MainActivity.class);
         finish();

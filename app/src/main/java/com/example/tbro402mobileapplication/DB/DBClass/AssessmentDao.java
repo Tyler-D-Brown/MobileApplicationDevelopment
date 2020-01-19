@@ -38,4 +38,16 @@ public interface AssessmentDao {
 
     @Query("SELECT COUNT(*) FROM Assessment WHERE status = 1")
     int getCompletedAssessments();
+
+    @Query("SELECT COUNT(*) FROM Assessment INNER JOIN Course ON Assessment.course = Course.id WHERE Course.term = :id")
+    int getAssessmentByTerm(int id);
+
+    @Query("SELECT COUNT(*) FROM Assessment INNER JOIN Course ON Assessment.course = Course.id WHERE Course.term = :id AND Assessment.status = 1")
+    int getCompleteAssessmentByTerm(int id);
+
+    @Query("SELECT COUNT(*) FROM Assessment INNER JOIN Course ON Assessment.course = Course.id WHERE Course.id = :id AND Assessment.status = 1")
+    int getCompleteAssessmentByCourse(int id);
+
+    @Query("SELECT COUNT(*) FROM Assessment INNER JOIN Course ON Assessment.course = Course.id WHERE Course.id = :id")
+    int getAssessmentByCourse(int id);
 }

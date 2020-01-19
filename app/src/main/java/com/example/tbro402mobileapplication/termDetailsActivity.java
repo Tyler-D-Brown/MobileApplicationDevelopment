@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -107,6 +108,16 @@ public class termDetailsActivity extends AppCompatActivity {
                 finish();
             }
         });
+        try {
+            ProgressBar degreeProgress = findViewById(R.id.progressBar);
+            int completed = termDetailsModel.getCompletedAssess(termId);
+            int assessments = termDetailsModel.getAssess(termId);
+            double progress = (double)completed/assessments;
+            progress = progress*100;
+            degreeProgress.setProgress((int)progress);
+        }catch(Exception e){
+            Log.i("Danger Will Robinson", e.toString());
+        }
     }
 
     private void initViewModel() {

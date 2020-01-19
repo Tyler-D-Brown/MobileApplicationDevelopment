@@ -133,4 +133,20 @@ public class AppRepository {
             }
         });
     }
+
+    public int getAssessmentByTerm(int id){
+        return db.assessmentDao().getAssessmentByTerm(id);
+    }
+
+    public int getCompleteAssessmentByTerm(int id){
+        return db.assessmentDao().getCompleteAssessmentByTerm(id);
+    }
+
+    public int getCompleteAssessmentByCourse(int id){
+        return db.assessmentDao().getCompleteAssessmentByCourse(id);
+    }
+
+    public int getAssessmentByCourse(int id){
+        return db.assessmentDao().getAssessmentByCourse(id);
+    }
 }
