@@ -70,13 +70,17 @@ public class courseActivity extends AppCompatActivity {
                     EditText note = findViewById(R.id.note);
                     note.setText(viewModel.liveCourse.getValue().getNote());
                     try {
-                        TextView mentName = findViewById(R.id.mentorName);
-                        mentName.setText(viewModel.mentor.getName());
-                        TextView mentPhone = findViewById(R.id.mentorPhone);
-                        mentPhone.setText(viewModel.mentor.getPhone());
-                        TextView mentEmail = findViewById(R.id.mentorEmail);
-                        mentEmail.setText(viewModel.mentor.getEmail());
-                        Log.e(TAG, Integer.toString(viewModel.liveCourse.getValue().getId()));
+                        if(viewModel.liveCourse.getValue().getMentor()==-1){
+                            Button b = findViewById(R.id.editMentor);
+                            b.setText("Add Mentor");
+                        }else {
+                            TextView mentName = findViewById(R.id.mentorName);
+                            mentName.setText(viewModel.mentor.getName());
+                            TextView mentPhone = findViewById(R.id.mentorPhone);
+                            mentPhone.setText(viewModel.mentor.getPhone());
+                            TextView mentEmail = findViewById(R.id.mentorEmail);
+                            mentEmail.setText(viewModel.mentor.getEmail());
+                        }
                     } catch (Exception e) {
                         Log.i(TAG, "mentor doesn't exist");
                     }

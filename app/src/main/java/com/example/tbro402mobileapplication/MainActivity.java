@@ -2,10 +2,8 @@ package com.example.tbro402mobileapplication;
 
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 
-import com.example.tbro402mobileapplication.DB.DBClass.AppRepository;
 import com.example.tbro402mobileapplication.DB.DBClass.Course;
 import com.example.tbro402mobileapplication.DB.DBClass.Term;
 import com.example.tbro402mobileapplication.ViewModel.MainViewModel;
@@ -14,7 +12,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -31,7 +28,6 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import static com.example.tbro402mobileapplication.Utilities.Constants.Term_ID_KEY;
 
